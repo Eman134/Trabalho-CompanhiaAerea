@@ -1,5 +1,6 @@
 #include <iostream>
 #include "modulos/Aviao.h"
+#include "modulos/Passageiro.h"
 
 using namespace std;
 
@@ -27,6 +28,8 @@ void carregarAvioes() {
     aviao.carregar();
 }
 
+void cadastrarPassageiro();
+
 int main() {
     
     int opcao;
@@ -50,6 +53,9 @@ int main() {
                 break;
             case 2:
                 carregarAvioes();
+                break;
+            case 4:
+                cadastrarPassageiro();
                 break;
             default:
                 cout << "Opção inválida!" << endl;
