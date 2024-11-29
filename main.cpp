@@ -1,58 +1,60 @@
 #include <iostream>
+#include "modulos/Aviao.h"
 
 using namespace std;
+
+void cadastrarAviao() {
+    int codigo;
+    string nome;
+    int qtdAssentos;
+
+    cout << "Digite o código do avião: ";
+    cin >> codigo;
+    cout << "Digite o nome do avião: ";
+    cin.ignore();
+    getline(cin, nome);
+    cout << "Digite a quantidade de assentos: ";
+    cin >> qtdAssentos;
+
+    Aviao aviao(codigo, nome, qtdAssentos);
+    aviao.salvar();
+
+    cout << "Avião cadastrado com sucesso!" << endl;
+}
+
+void carregarAvioes() {
+    Aviao aviao(0, "", 0);
+    aviao.carregar();
+}
 
 int main() {
     
     int opcao;
     do {
         cout << "1 - Cadastrar avião" << endl;
-        cout << "2 - Cadastrar tripulação" << endl;
-        cout << "3 - Cadastrar passageiro" << endl;
-        cout << "4 - Cadastrar voo" << endl;
-        cout << "5 - Cadastrar assento" << endl;
-        cout << "6 - Fazer reserva" << endl;
-        cout << "7 - Baixa reserva" << endl;
-        cout << "8 - Pesquisa" << endl;
-        cout << "9 - Fidelidade" << endl;
-        cout << "10 - Sair" << endl;
+        cout << "2 - Visualizar aviões" << endl;
+        cout << "3 - Cadastrar tripulação" << endl;
+        cout << "4 - Cadastrar passageiro" << endl;
+        cout << "5 - Cadastrar voo" << endl;
+        cout << "6 - Cadastrar assento" << endl;
+        cout << "7 - Fazer reserva" << endl;
+        cout << "8 - Baixa reserva" << endl;
+        cout << "9 - Pesquisa" << endl;
+        cout << "10 - Fidelidade" << endl;
+        cout << "11 - Sair" << endl;
         cout << "Digite a opção desejada: ";
         cin >> opcao;
         switch(opcao) {
             case 1:
-                cout << "Cadastrar avião" << endl;
+                cadastrarAviao();
                 break;
             case 2:
-                cout << "Cadastrar tripulação" << endl;
-                break;
-            case 3:
-                cout << "Cadastrar passageiro" << endl;
-                break;
-            case 4:
-                cout << "Cadastrar voo" << endl;
-                break;
-            case 5:
-                cout << "Cadastrar assento" << endl;
-                break;
-            case 6:
-                cout << "Fazer reserva" << endl;
-                break;
-            case 7:
-                cout << "Baixa reserva" << endl;
-                break;
-            case 8:
-                cout << "Pesquisa" << endl;
-                break;
-            case 9:
-                cout << "Fidelidade" << endl;
-                break;
-            case 10:
-                cout << "Sair" << endl;
+                carregarAvioes();
                 break;
             default:
-                cout << "Opção inválida" << endl;
+                cout << "Opção inválida!" << endl;
         }
-    } while(opcao != 10);
+    } while(opcao != 11);
 
     return 0;
 }
