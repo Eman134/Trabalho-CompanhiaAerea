@@ -13,6 +13,7 @@ class Aviao {
 
     public:
         Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos);
+        Aviao();
 
         int getCodigoAviao();
         string getNomeAviao();
@@ -24,6 +25,8 @@ class Aviao {
 
         void salvar();
         void carregar();
+        void visualizarAvioes();
+        void cadastrarAviao();
 };
 
 #endif
