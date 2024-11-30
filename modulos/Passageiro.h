@@ -14,6 +14,7 @@ private:
     
 public:
     Passageiro(int codigo_passageiro, std::string nome, std::string endereco, std::string telefone, bool fidelidade, int pontos_fidelidade);
+    Passageiro();
 
     int getCodigoPassageiro();
     std::string getNome();
@@ -28,5 +29,6 @@ public:
     void setTelefone(std::string telefone);
     void setFidelidade(bool fidelidade);
     void setPontosFidelidade(int pontos_fidelidade);
+    void cadastrarPassageiro();
 };
 #endif

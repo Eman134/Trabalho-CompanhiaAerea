@@ -10,6 +10,15 @@ Passageiro::Passageiro(int codigo_passageiro, std::string nome, std::string ende
     this->pontos_fidelidade = pontos_fidelidade;
 }
 
+Passageiro::Passageiro() {
+    this->codigo_passageiro = 0;
+    this->nome = "";
+    this->endereco = "";
+    this->telefone = "";
+    this->fidelidade = false;
+    this->pontos_fidelidade = 0;
+}
+
 int Passageiro::getCodigoPassageiro() {
     return this->codigo_passageiro;
 }
@@ -59,7 +68,7 @@ void Passageiro::setPontosFidelidade(int pontos_fidelidade) {
 }
 using namespace std;
 
-void cadastrarPassageiro() {
+void Passageiro::cadastrarPassageiro() {
     int codigo_passageiro;
     string nome;
     string endereco;
