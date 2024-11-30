@@ -1,5 +1,7 @@
 #include <iostream>
 #include "modulos/Aviao.h"
+#include "modulos/Passageiro.h"
+#include "modulos/sistemaTripulacao.h"
 
 #ifdef _WIN32
     #define LIMPAR_CONSOLE "cls"
@@ -9,40 +11,46 @@
 
 using namespace std;
 
-void mostrarMenu() {
-    cout << "1 - Cadastrar avião" << endl;
-    cout << "2 - Visualizar aviões" << endl;
-    cout << "3 - Cadastrar tripulação" << endl;
-    cout << "4 - Cadastrar passageiro" << endl;
-    cout << "5 - Cadastrar voo" << endl;
-    cout << "6 - Cadastrar assento" << endl;
-    cout << "7 - Fazer reserva" << endl;
-    cout << "8 - Baixa reserva" << endl;
-    cout << "9 - Pesquisa" << endl;
-    cout << "10 - Fidelidade" << endl;
-    cout << "11 - Sair" << endl;
-    cout << "Digite a opção desejada: ";
+void cadastrarAviao() {
+    int codigo;
+    string nome;
+    int qtdAssentos;
+
+    cout << "Digite o código do avião: ";
+    cin >> codigo;
+    cout << "Digite o nome do avião: ";
+    cin.ignore();
+    getline(cin, nome);
+    cout << "Digite a quantidade de assentos: ";
+    cin >> qtdAssentos;
+
+    Aviao aviao(codigo, nome, qtdAssentos);
+    aviao.salvar();
+
+    cout << "Avião cadastrado com sucesso!" << endl;
 }
 
-void esperarRetorno() {
-    string retorno;
-    cout << "\nCaso deseje voltar ao menu inicial, digite RETORNAR: ";
-    while (true) {
-        cin >> retorno;
-        if (retorno == "RETORNAR") {
-            system(LIMPAR_CONSOLE);
-            break;
-        } else {
-            cout << "Comando inválido! Digite RETORNAR para voltar: ";
-        }
-    }
+void carregarAvioes() {
+    Aviao aviao(0, "", 0);
+    aviao.carregar();
 }
 
 int main() {
+    
     int opcao;
     do {
-        system(LIMPAR_CONSOLE);
-        mostrarMenu();
+        cout << "1 - Cadastrar avião" << endl;
+        cout << "2 - Visualizar aviões" << endl;
+        cout << "3 - Cadastrar tripulação" << endl;
+        cout << "4 - Cadastrar passageiro" << endl;
+        cout << "5 - Cadastrar voo" << endl;
+        cout << "6 - Cadastrar assento" << endl;
+        cout << "7 - Fazer reserva" << endl;
+        cout << "8 - Baixa reserva" << endl;
+        cout << "9 - Pesquisa" << endl;
+        cout << "10 - Fidelidade" << endl;
+        cout << "11 - Sair" << endl;
+        cout << "Digite a opção desejada: ";
         cin >> opcao;
 
         system(LIMPAR_CONSOLE);
@@ -94,11 +102,20 @@ int main() {
             case 11:
                 cout << "Encerrando o programa..." << endl;
                 break;
+            case 3:
+                sistema.cadastrarTripulacao(); // Chama a função cadastrarTripulacao através do objeto 'sistema'
+                break;
+            case 4:
+                sistema.listarTripulacao(); // Chama a função listarTripulacao através do objeto 'sistema'
+                break;
+            case 5:
+                cadastrarPassageiro();
+                break;
             default:
                 cout << "Opção inválida!" << endl;
                 esperarRetorno();
         }
-    } while (opcao != 11);
+    } while(opcao != 11);
 
     return 0;
 }
