@@ -32,7 +32,7 @@ void esperarRetorno() {
     cout << "\nCaso deseje voltar ao menu inicial, digite 'R': ";
     while (true) {
         cin >> retorno;
-        if (retorno == "R") {
+        if (retorno == "R" || retorno == "r") {
             system(LIMPAR_CONSOLE);
             break;
         } else {
