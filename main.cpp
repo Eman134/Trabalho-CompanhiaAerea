@@ -1,6 +1,7 @@
 #include <iostream>
 #include "modulos/Aviao.h"
 #include "modulos/Passageiro.h"
+#include "modulos/sistemaTripulacao.h"
 
 using namespace std;
 
@@ -31,6 +32,7 @@ void carregarAvioes() {
 void cadastrarPassageiro();
 
 int main() {
+        sistemaTripulacao sistema;  // Instancia o objeto do tipo sistemaTripulacao
     
     int opcao;
     do {
@@ -54,13 +56,19 @@ int main() {
             case 2:
                 carregarAvioes();
                 break;
+            case 3:
+                sistema.cadastrarTripulacao(); // Chama a função cadastrarTripulacao através do objeto 'sistema'
+                break;
             case 4:
+                sistema.listarTripulacao(); // Chama a função listarTripulacao através do objeto 'sistema'
+                break;
+            case 5:
                 cadastrarPassageiro();
                 break;
             default:
                 cout << "Opção inválida!" << endl;
         }
-    } while(opcao != 11);
+    } while(opcao != 12);
 
     return 0;
 }
