@@ -111,4 +111,24 @@ void Aviao::carregar() {
 
 void Aviao::cadastrarAviao() {
     int codigo;
+    string nome;
+    int qtdAssentos;
+
+    cout << "Digite o código do avião: ";
+    cin >> codigo;
+    cout << "Digite o nome do avião: ";
+    cin.ignore();
+    getline(cin, nome);
+    cout << "Digite a quantidade de assentos: ";
+    cin >> qtdAssentos;
+
+    Aviao aviao(codigo, nome, qtdAssentos);
+    aviao.salvar();
+
+    cout << "Avião cadastrado com sucesso!" << endl;
+}
+
+void Aviao::visualizarAvioes() {
+    cout << "Aviões cadastrados no sistema:" << endl;
+    this->carregar();
 }
