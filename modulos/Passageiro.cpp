@@ -23,27 +23,27 @@ Passageiro::Passageiro() {
     this->pontos_fidelidade = 0;
 }
 
-int Passageiro::getCodigoPassageiro() {
+int Passageiro::getCodigoPassageiro() const {
     return this->codigo_passageiro;
 }
 
-std::string Passageiro::getNome() {
+std::string Passageiro::getNome() const {
     return this->nome;
 }
 
-std::string Passageiro::getEndereco() {
+std::string Passageiro::getEndereco() const {
     return this->endereco;
 }
 
-std::string Passageiro::getTelefone() {
+std::string Passageiro::getTelefone() const {
     return this->telefone;
 }
 
-bool Passageiro::isFidelidade() {
+bool Passageiro::isFidelidade() const {
     return this->fidelidade;
 }
 
-int Passageiro::getPontosFidelidade() {
+int Passageiro::getPontosFidelidade() const {
     return this->pontos_fidelidade;
 }
 

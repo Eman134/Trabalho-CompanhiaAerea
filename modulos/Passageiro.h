@@ -17,12 +17,12 @@ public:
     Passageiro(int codigo_passageiro, std::string nome, std::string endereco, std::string telefone, bool fidelidade, int pontos_fidelidade);
     Passageiro();
 
-    int getCodigoPassageiro();
-    std::string getNome();
-    std::string getEndereco();
-    std::string getTelefone();
-    bool isFidelidade();
-    int getPontosFidelidade();
+    int getCodigoPassageiro() const;
+    std::string getNome() const;
+    std::string getEndereco() const;
+    std::string getTelefone() const;
+    bool isFidelidade() const;
+    int getPontosFidelidade() const;
 
     void setCodigoPassageiro(int codigo_passageiro);
     void setNome(std::string nome);
