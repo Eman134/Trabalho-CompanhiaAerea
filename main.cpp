@@ -46,6 +46,7 @@ int main() {
     sistemaTripulacao sistema;
     Aviao aviao;
     Passageiro passageiro;
+    Passageiro::carregarPassageiros();
     
     int opcao;
     do {

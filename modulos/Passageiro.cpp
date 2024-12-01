@@ -1,6 +1,7 @@
 #include "Passageiro.h"
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 std::vector<Passageiro> lista_passageiros;
 
@@ -69,7 +70,6 @@ void Passageiro::setFidelidade(bool fidelidade) {
 void Passageiro::setPontosFidelidade(int pontos_fidelidade) {
     this->pontos_fidelidade = pontos_fidelidade;
 }
-using namespace std;
 
 bool Passageiro::verificarDuplicidade(int codigo_passageiro) {
     for (const auto& passageiro : lista_passageiros) {
@@ -82,33 +82,71 @@ bool Passageiro::verificarDuplicidade(int codigo_passageiro) {
 
 void Passageiro::cadastrarPassageiro() {
     int codigo_passageiro;
-    string nome;
-    string endereco;
-    string telefone;
+    std::string nome;
+    std::string endereco;
+    std::string telefone;
     bool fidelidade;
     int pontos_fidelidade;
 
-    cout << "Digite o código do passageiro: ";
-    cin >> codigo_passageiro;
+    std::cout << "Digite o código do passageiro: ";
+    std::cin >> codigo_passageiro;
 
     if (verificarDuplicidade(codigo_passageiro)) {
-        cout << "Erro: Passageiro com este código já existe!" << endl;
+        std::cout << "Erro: Passageiro com este código já existe!" << std::endl;
         return;
     }
 
-    cout << "Digite o nome do passageiro: ";
-    cin.ignore();
-    getline(cin, nome);
-    cout << "Digite o endereço do passageiro: ";
-    getline(cin, endereco);
-    cout << "Digite o telefone do passageiro: ";
-    getline(cin, telefone);
-    cout << "O passageiro possui fidelidade? (1 para sim, 0 para não): ";
-    cin >> fidelidade;
-    cout << "Digite os pontos de fidelidade do passageiro: ";
-    cin >> pontos_fidelidade;
+    std::cout << "Digite o nome do passageiro: ";
+    std::cin.ignore();
+    std::getline(std::cin, nome);
+    std::cout << "Digite o endereço do passageiro: ";
+    std::getline(std::cin, endereco);
+    std::cout << "Digite o telefone do passageiro: ";
+    std::getline(std::cin, telefone);
+    std::cout << "O passageiro possui fidelidade? (1 para sim, 0 para não): ";
+    std::cin >> fidelidade;
+    std::cout << "Digite os pontos de fidelidade do passageiro: ";
+    std::cin >> pontos_fidelidade;
 
     Passageiro novo_passageiro(codigo_passageiro, nome, endereco, telefone, fidelidade, pontos_fidelidade);
     lista_passageiros.push_back(novo_passageiro);
-    cout << "Passageiro cadastrado com sucesso!" << endl;
+    salvarPassageiros();
+    std::cout << "Passageiro cadastrado com sucesso!" << std::endl;
+}
+
+void Passageiro::salvarPassageiros() {
+    std::ofstream arquivo("passageiros.txt");
+    for (const auto& passageiro : lista_passageiros) {
+        arquivo << passageiro.getCodigoPassageiro() << "\n"
+                << passageiro.getNome() << "\n"
+                << passageiro.getEndereco() << "\n"
+                << passageiro.getTelefone() << "\n"
+                << passageiro.isFidelidade() << "\n"
+                << passageiro.getPontosFidelidade() << "\n";
+    }
+    arquivo.close();
+}
+
+void Passageiro::carregarPassageiros() {
+    std::ifstream arquivo("passageiros.txt");
+    if (!arquivo.is_open()) return;
+
+    int codigo_passageiro;
+    std::string nome;
+    std::string endereco;
+    std::string telefone;
+    bool fidelidade;
+    int pontos_fidelidade;
+
+    while (arquivo >> codigo_passageiro) {
+        arquivo.ignore();
+        std::getline(arquivo, nome);
+        std::getline(arquivo, endereco);
+        std::getline(arquivo, telefone);
+        arquivo >> fidelidade;
+        arquivo >> pontos_fidelidade;
+        Passageiro passageiro(codigo_passageiro, nome, endereco, telefone, fidelidade, pontos_fidelidade);
+        lista_passageiros.push_back(passageiro);
+    }
+    arquivo.close();
 }
