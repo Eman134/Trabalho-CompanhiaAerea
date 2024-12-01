@@ -150,3 +150,21 @@ void Passageiro::carregarPassageiros() {
     }
     arquivo.close();
 }
+
+Passageiro* Passageiro::buscarPassageiroPorCodigo(int codigo_passageiro) {
+    for (auto& passageiro : lista_passageiros) {
+        if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
+            return &passageiro;
+        }
+    }
+    return nullptr;
+}
+
+Passageiro* Passageiro::buscarPassageiroPorNome(const std::string& nome) {
+    for (auto& passageiro : lista_passageiros) {
+        if (passageiro.getNome() == nome) {
+            return &passageiro;
+        }
+    }
+    return nullptr;
+}

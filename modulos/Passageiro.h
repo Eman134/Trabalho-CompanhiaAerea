@@ -2,6 +2,7 @@
 #define PASSAGEIRO_H
 
 #include <string>
+#include <vector>
 
 class Passageiro {
 private:
@@ -11,7 +12,7 @@ private:
     std::string telefone;
     bool fidelidade;
     int pontos_fidelidade;
-    
+
 public:
     Passageiro(int codigo_passageiro, std::string nome, std::string endereco, std::string telefone, bool fidelidade, int pontos_fidelidade);
     Passageiro();
@@ -29,6 +30,15 @@ public:
     void setTelefone(std::string telefone);
     void setFidelidade(bool fidelidade);
     void setPontosFidelidade(int pontos_fidelidade);
-    void cadastrarPassageiro();
+
+    static bool verificarDuplicidade(int codigo_passageiro);
+    static void cadastrarPassageiro();
+    static void salvarPassageiros();
+    static void carregarPassageiros();
+    static Passageiro* buscarPassageiroPorCodigo(int codigo_passageiro);
+    static Passageiro* buscarPassageiroPorNome(const std::string& nome);
 };
-#endif
+
+extern std::vector<Passageiro> lista_passageiros;
+
+#endif // PASSAGEIRO_H

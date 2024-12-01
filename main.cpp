@@ -27,6 +27,13 @@ void mostrarMenu() {
     cout << "Digite a opção desejada: ";
 }
 
+void mostrarMenuBuscaPassageiro() {
+    cout << "1 - Buscar passageiro por código" << endl;
+    cout << "2 - Buscar passageiro por nome" << endl;
+    cout << "R - Voltar ao menu principal" << endl;
+    cout << "Digite a opção desejada: ";
+}
+
 void esperarRetorno() {
     string retorno;
     cout << "\nCaso deseje voltar ao menu inicial, digite 'R': ";
@@ -42,7 +49,6 @@ void esperarRetorno() {
 }
 
 int main() {
-
     sistemaTripulacao sistema;
     Aviao aviao;
     Passageiro passageiro;
@@ -79,38 +85,89 @@ int main() {
                 esperarRetorno();
                 break;
             }
-            case 6:
-                cout << "Pesquisa de passageiro (em desenvolvimento)" << endl;
-                esperarRetorno();
+            case 6: {
+                int opcaoBusca;
+                do {
+                    mostrarMenuBuscaPassageiro();
+                    cin >> opcaoBusca;
+                    system(LIMPAR_CONSOLE);
+                    switch (opcaoBusca) {
+                        case 1: {
+                            int codigo;
+                            cout << "Digite o código do passageiro: ";
+                            cin >> codigo;
+                            Passageiro* passageiro = Passageiro::buscarPassageiroPorCodigo(codigo);
+                            if (passageiro) {
+                                cout << "Passageiro encontrado: " << passageiro->getNome() << endl;
+                            } else {
+                                cout << "Passageiro não encontrado." << endl;
+                            }
+                            esperarRetorno();
+                            break;
+                        }
+                        case 2: {
+                            string nome;
+                            cout << "Digite o nome do passageiro: ";
+                            cin.ignore();
+                            getline(cin, nome);
+                            Passageiro* passageiro = Passageiro::buscarPassageiroPorNome(nome);
+                            if (passageiro) {
+                                cout << "Passageiro encontrado: " << passageiro->getNome() << endl;
+                            } else {
+                                cout << "Passageiro não encontrado." << endl;
+                            }
+                            esperarRetorno();
+                            break;
+                        }
+                        case R: {
+                            cout << "Voltando ao menu principal..." << endl;
+                            break;
+                        }
+                        default: {
+                            cout << "Opção inválida." << endl;
+                            esperarRetorno();
+                            break;
+                        }
+                    }
+                } while (opcaoBusca != 3);
                 break;
-            case 7:
+            }
+            case 7: {
                 cout << "Cadastrar voo (em desenvolvimento)" << endl;
                 esperarRetorno();
                 break;
-            case 8:
+            }
+            case 8: {
                 cout << "Cadastrar assento (em desenvolvimento)" << endl;
                 esperarRetorno();
                 break;
-            case 9:
+            }
+            case 9: {
                 cout << "Fazer reserva (em desenvolvimento)" << endl;
                 esperarRetorno();
                 break;
-            case 10:
+            }
+            case 10: {
                 cout << "Baixa reserva (em desenvolvimento)" << endl;
                 esperarRetorno();
                 break;
-            case 11:
+            }
+            case 11: {
                 cout << "Fidelidade (em desenvolvimento)" << endl;
                 esperarRetorno();
                 break;
-            case 12:
+            }
+            case 12: {
                 cout << "Encerrando o programa..." << endl;
                 break;
-            default:
+            }
+            default: {
                 cout << "Opção inválida!" << endl;
                 esperarRetorno();
+                break;
+            }
         }
-    } while(opcao != 12);
+    } while (opcao != 12);
 
     return 0;
 }
