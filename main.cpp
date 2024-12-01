@@ -81,7 +81,7 @@ int main() {
                 break;
             }
             case 5: {
-                passageiro.cadastrarPassageiro();
+                Passageiro::cadastrarPassageiro();
                 esperarRetorno();
                 break;
             }
@@ -119,7 +119,8 @@ int main() {
                             esperarRetorno();
                             break;
                         }
-                        case R: {
+                        case 'R':
+                        case 'r': {
                             cout << "Voltando ao menu principal..." << endl;
                             break;
                         }
@@ -129,7 +130,7 @@ int main() {
                             break;
                         }
                     }
-                } while (opcaoBusca != 3);
+                } while (opcaoBusca != 'R' && opcaoBusca != 'r');
                 break;
             }
             case 7: {
@@ -158,11 +159,11 @@ int main() {
                 break;
             }
             case 12: {
-                cout << "Encerrando o programa..." << endl;
+                cout << "Saindo..." << endl;
                 break;
             }
             default: {
-                cout << "Opção inválida!" << endl;
+                cout << "Opção inválida." << endl;
                 esperarRetorno();
                 break;
             }
