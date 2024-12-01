@@ -1,5 +1,8 @@
 #include "Passageiro.h"
 #include <iostream>
+#include <vector>
+
+std::vector<Passageiro> lista_passageiros;
 
 Passageiro::Passageiro(int codigo_passageiro, std::string nome, std::string endereco, std::string telefone, bool fidelidade, int pontos_fidelidade) {
     this->codigo_passageiro = codigo_passageiro;
@@ -68,6 +71,15 @@ void Passageiro::setPontosFidelidade(int pontos_fidelidade) {
 }
 using namespace std;
 
+bool Passageiro::verificarDuplicidade(int codigo_passageiro) {
+    for (const auto& passageiro : lista_passageiros) {
+        if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Passageiro::cadastrarPassageiro() {
     int codigo_passageiro;
     string nome;
@@ -78,6 +90,12 @@ void Passageiro::cadastrarPassageiro() {
 
     cout << "Digite o código do passageiro: ";
     cin >> codigo_passageiro;
+
+    if (verificarDuplicidade(codigo_passageiro)) {
+        cout << "Erro: Passageiro com este código já existe!" << endl;
+        return;
+    }
+
     cout << "Digite o nome do passageiro: ";
     cin.ignore();
     getline(cin, nome);
@@ -90,6 +108,7 @@ void Passageiro::cadastrarPassageiro() {
     cout << "Digite os pontos de fidelidade do passageiro: ";
     cin >> pontos_fidelidade;
 
-    Passageiro passageiro(codigo_passageiro, nome, endereco, telefone, fidelidade, pontos_fidelidade);
+    Passageiro novo_passageiro(codigo_passageiro, nome, endereco, telefone, fidelidade, pontos_fidelidade);
+    lista_passageiros.push_back(novo_passageiro);
     cout << "Passageiro cadastrado com sucesso!" << endl;
 }
