@@ -19,6 +19,7 @@ class Aviao {
         int getCodigoAviao();
         string getNomeAviao();
         int getQtdAssentos();
+        int getQtdAvioes();
 
         void setCodigoAviao(int codigo_aviao);
         void setNomeAviao(string nome_aviao);

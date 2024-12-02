@@ -25,7 +25,7 @@ int Aviao::getCodigoDisponivel() {
 
     ifstream arquivo("./db/avioes.bin", ios::binary);
     if (!arquivo) {
-        cerr << "Erro ao abrir o arquivo para verificar o próximo código!" << endl;
+        cerr << "Erro ao abrir o arquivo para verificar o próximo codigo!" << endl;
         return maiorCodigo + 1;  // Se o arquivo não existir, começamos do código 1
     }
 
@@ -46,6 +46,30 @@ int Aviao::getCodigoDisponivel() {
     
     // Retorna o próximo código disponível
     return maiorCodigo + 1;
+}
+
+int Aviao::getQtdAvioes() {
+    int qnt = 0;  // Contador de aviões
+
+    ifstream arquivo("./db/avioes.bin", ios::binary);
+    if (!arquivo) {
+        cerr << "Erro ao abrir o arquivo para verificar a quantidade de aviões!" << endl;
+        return 0;  // Se o arquivo não existir ou houver erro, retorna 0
+    }
+
+    while (arquivo.read((char*)&codigo_aviao, sizeof(codigo_aviao))) {
+        size_t tamanhoNome;
+        arquivo.read((char*)&tamanhoNome, sizeof(tamanhoNome));  // Lê o tamanho do nome
+        arquivo.seekg(tamanhoNome, ios::cur);  // Pula o nome
+        arquivo.read((char*)&qtd_assentos, sizeof(qtd_assentos));  // Lê a quantidade de assentos
+
+        // Incrementa o contador a cada avião lido
+        qnt++;
+    }
+
+    arquivo.close();
+
+    return qnt;  // Retorna a quantidade de aviões
 }
 
 

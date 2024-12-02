@@ -1,5 +1,6 @@
 #include <iostream>
 #include "modulos/Aviao.h"
+#include "modulos/Voo.h"
 #include "modulos/Passageiro.h"
 #include "modulos/sistemaTripulacao.h"
 #include <stdlib.h>
@@ -29,7 +30,7 @@ void mostrarMenu() {
 }
 
 void mostrarMenuBuscaPassageiro() {
-    cout << "1 - Buscar passageiro por código" << endl;
+    cout << "1 - Buscar passageiro por codigo" << endl;
     cout << "2 - Buscar passageiro por nome" << endl;
     cout << "R - Voltar ao menu principal" << endl;
     cout << "Digite a opção desejada: ";
@@ -44,7 +45,7 @@ void esperarRetorno() {
             system(LIMPAR_CONSOLE);
             break;
         } else {
-            cout << "Comando inválido! Digite 'R' para voltar: ";
+            cout << "Comando invalido! Digite 'R' para voltar: ";
         }
     }
 }
@@ -52,6 +53,7 @@ void esperarRetorno() {
 int main() {
     sistemaTripulacao sistema;
     Aviao aviao;
+    Voo voo;
     Passageiro passageiro;
     Passageiro::carregarPassageiros();
     
@@ -89,7 +91,7 @@ int main() {
             case 6: {
                 string codigo;
 
-                cout << "Digite o código ou o nome do passageiro para pesquisa: " << endl;
+                cout << "Digite o codigo ou o nome do passageiro para pesquisa: " << endl;
 
                 cin >> codigo;
 
@@ -122,7 +124,7 @@ int main() {
                 break;
             }
             case 7: {
-                cout << "Cadastrar voo (em desenvolvimento)" << endl;
+                voo.cadastrarVoo();
                 esperarRetorno();
                 break;
             }
@@ -151,7 +153,7 @@ int main() {
                 break;
             }
             default: {
-                cout << "Opção inválida." << endl;
+                cout << "Opção invalida." << endl;
                 esperarRetorno();
                 break;
             }
