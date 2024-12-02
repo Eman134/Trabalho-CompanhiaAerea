@@ -20,6 +20,35 @@ Aviao::Aviao() {
     this->qtd_assentos = 0;
 }
 
+int Aviao::getCodigoDisponivel() {
+    int maiorCodigo = 0;  // Variável para armazenar o maior código
+
+    ifstream arquivo("./db/avioes.bin", ios::binary);
+    if (!arquivo) {
+        cerr << "Erro ao abrir o arquivo para verificar o próximo código!" << endl;
+        return maiorCodigo + 1;  // Se o arquivo não existir, começamos do código 1
+    }
+
+    while (arquivo.read((char*)&codigo_aviao, sizeof(codigo_aviao))) {
+        // Atualiza o maior código encontrado
+        if (codigo_aviao > maiorCodigo) {
+            maiorCodigo = codigo_aviao;
+        }
+
+        // Ignora os outros dados (nome e qtd_assentos) já que não são necessários para o cálculo do código
+        size_t tamanhoNome;
+        arquivo.read((char*)&tamanhoNome, sizeof(tamanhoNome));
+        arquivo.seekg(tamanhoNome, ios::cur);  // Pula o nome
+        arquivo.read((char*)&qtd_assentos, sizeof(qtd_assentos));  // Pula a quantidade de assentos
+    }
+
+    arquivo.close();
+    
+    // Retorna o próximo código disponível
+    return maiorCodigo + 1;
+}
+
+
 int Aviao::getCodigoAviao() {
     return this->codigo_aviao;
 }
@@ -110,12 +139,10 @@ void Aviao::carregar() {
 }
 
 void Aviao::cadastrarAviao() {
-    int codigo;
+    int codigo = this->getCodigoDisponivel();
     string nome;
     int qtdAssentos;
 
-    cout << "Digite o código do avião: ";
-    cin >> codigo;
     cout << "Digite o nome do avião: ";
     cin.ignore();
     getline(cin, nome);
