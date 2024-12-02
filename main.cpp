@@ -2,6 +2,7 @@
 #include "modulos/Aviao.h"
 #include "modulos/Passageiro.h"
 #include "modulos/sistemaTripulacao.h"
+#include <stdlib.h>
 
 #ifdef _WIN32
     #define LIMPAR_CONSOLE "cls"
@@ -12,10 +13,10 @@
 using namespace std;
 
 void mostrarMenu() {
-    cout << "1 - Cadastrar avião" << endl;
-    cout << "2 - Visualizar aviões" << endl;
-    cout << "3 - Cadastrar tripulação" << endl;
-    cout << "4 - Visualizar tripulações" << endl;
+    cout << "1 - Cadastrar aviao" << endl;
+    cout << "2 - Visualizar avioes" << endl;
+    cout << "3 - Cadastrar tripulacao" << endl;
+    cout << "4 - Visualizar tripulacoes" << endl;
     cout << "5 - Cadastrar passageiro" << endl;
     cout << "6 - Pesquisa de passageiro" << endl;
     cout << "7 - Cadastrar voo" << endl;
@@ -86,51 +87,38 @@ int main() {
                 break;
             }
             case 6: {
-                int opcaoBusca;
-                do {
-                    mostrarMenuBuscaPassageiro();
-                    cin >> opcaoBusca;
-                    system(LIMPAR_CONSOLE);
-                    switch (opcaoBusca) {
-                        case 1: {
-                            int codigo;
-                            cout << "Digite o código do passageiro: ";
-                            cin >> codigo;
-                            Passageiro* passageiro = Passageiro::buscarPassageiroPorCodigo(codigo);
-                            if (passageiro) {
-                                cout << "Passageiro encontrado: " << passageiro->getNome() << endl;
-                            } else {
-                                cout << "Passageiro não encontrado." << endl;
-                            }
-                            esperarRetorno();
-                            break;
-                        }
-                        case 2: {
-                            string nome;
-                            cout << "Digite o nome do passageiro: ";
-                            cin.ignore();
-                            getline(cin, nome);
-                            Passageiro* passageiro = Passageiro::buscarPassageiroPorNome(nome);
-                            if (passageiro) {
-                                cout << "Passageiro encontrado: " << passageiro->getNome() << endl;
-                            } else {
-                                cout << "Passageiro não encontrado." << endl;
-                            }
-                            esperarRetorno();
-                            break;
-                        }
-                        case 'R':
-                        case 'r': {
-                            cout << "Voltando ao menu principal..." << endl;
-                            break;
-                        }
-                        default: {
-                            cout << "Opção inválida." << endl;
-                            esperarRetorno();
-                            break;
-                        }
+                string codigo;
+
+                cout << "Digite o código ou o nome do passageiro para pesquisa: " << endl;
+
+                cin >> codigo;
+
+                bool isNumero = true;
+                for (char c : codigo) {
+                    if (!isdigit(c)) {
+                        isNumero = false;
+                        break;
                     }
-                } while (opcaoBusca != 'R' && opcaoBusca != 'r');
+                }
+
+                if (isNumero) {
+                    int numero = stoi(codigo);
+                    Passageiro* passageiro = Passageiro::buscarPassageiro(numero);
+                    if (passageiro) {
+                        cout << "Passageiro encontrado: " << passageiro->getNome() << endl;
+                    } else {
+                        cout << "Passageiro não encontrado." << endl;
+                    }
+                } else {
+                    Passageiro* passageiro = Passageiro::buscarPassageiro(codigo);
+                    if (passageiro) {
+                        cout << "Passageiro encontrado: " << passageiro->getNome() << endl;
+                    } else {
+                        cout << "Passageiro não encontrado." << endl;
+                    }
+                }
+ 
+                esperarRetorno();
                 break;
             }
             case 7: {

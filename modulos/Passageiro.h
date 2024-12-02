@@ -35,8 +35,8 @@ public:
     static void cadastrarPassageiro();
     static void salvarPassageiros();
     static void carregarPassageiros();
-    static Passageiro* buscarPassageiroPorCodigo(int codigo_passageiro);
-    static Passageiro* buscarPassageiroPorNome(const std::string& nome);
+    static Passageiro* buscarPassageiro(int codigo_passageiro);
+    static Passageiro* buscarPassageiro(const std::string& nome);
 };
 
 extern std::vector<Passageiro> lista_passageiros;
