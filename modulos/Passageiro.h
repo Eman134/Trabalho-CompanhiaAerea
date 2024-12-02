@@ -7,9 +7,9 @@
 class Passageiro {
 private:
     int codigo_passageiro;      
-    std::string nome;           
-    std::string endereco;      
-    std::string telefone;       
+    std::string nome;       
+    std::string endereco;
+    std::string telefone;
     bool fidelidade;         
     int pontos_fidelidade;
 public:
