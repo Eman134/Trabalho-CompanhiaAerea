@@ -15,6 +15,7 @@ class Aviao {
         Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos);
         Aviao();
 
+        int getCodigoDisponivel();
         int getCodigoAviao();
         string getNomeAviao();
         int getQtdAssentos();
