@@ -1,9 +1,13 @@
 #include <iostream>
-#include "modulos/Aviao.h"
-#include "modulos/Voo.h"
+#include "src/controllers/AviaoController.h"
+#include "src/controllers/VooController.h"
 #include "modulos/Passageiro.h"
 #include "modulos/sistemaTripulacao.h"
 #include <stdlib.h>
+#include <locale>
+#ifdef _WIN32
+    #include <direct.h>
+#endif
 
 #ifdef _WIN32
     #define LIMPAR_CONSOLE "cls"
@@ -14,6 +18,7 @@
 using namespace std;
 
 void mostrarMenu() {
+    cout << "====== MENU PRINCIPAL ======" << endl;
     cout << "1 - Cadastrar aviao" << endl;
     cout << "2 - Visualizar avioes" << endl;
     cout << "3 - Cadastrar tripulacao" << endl;
@@ -21,19 +26,14 @@ void mostrarMenu() {
     cout << "5 - Cadastrar passageiro" << endl;
     cout << "6 - Pesquisa de passageiro" << endl;
     cout << "7 - Cadastrar voo" << endl;
-    cout << "8 - Cadastrar assento" << endl;
-    cout << "9 - Fazer reserva" << endl;
-    cout << "10 - Baixa reserva" << endl;
-    cout << "11 - Fidelidade" << endl;
-    cout << "12 - Sair" << endl;
-    cout << "Digite a opção desejada: ";
-}
-
-void mostrarMenuBuscaPassageiro() {
-    cout << "1 - Buscar passageiro por codigo" << endl;
-    cout << "2 - Buscar passageiro por nome" << endl;
-    cout << "R - Voltar ao menu principal" << endl;
-    cout << "Digite a opção desejada: ";
+    cout << "8 - Visualizar voos" << endl;
+    cout << "9 - Cadastrar assento" << endl;
+    cout << "10 - Fazer reserva" << endl;
+    cout << "11 - Baixa reserva" << endl;
+    cout << "12 - Fidelidade" << endl;
+    cout << "13 - Sair" << endl;
+    cout << "============================" << endl;
+    cout << "Digite a opcao desejada: ";
 }
 
 void esperarRetorno() {
@@ -50,10 +50,26 @@ void esperarRetorno() {
     }
 }
 
+void criarDiretorioLocal() {
+    #ifdef _WIN32
+        if (_mkdir("./db") != 0 && errno != EEXIST) {
+            cerr << "Erro ao criar diretório 'db'!" << endl;
+        }
+    #else
+        if (mkdir("./db", 0777) != 0 && errno != EEXIST) {
+            cerr << "Erro ao criar diretório 'db'!" << endl;
+        }
+    #endif
+}
+
 int main() {
+
+    criarDiretorioLocal();
+
+    AviaoController aviaoController;
+    VooController vooController;
+
     sistemaTripulacao sistema;
-    Aviao aviao;
-    Voo voo;
     Passageiro passageiro;
     Passageiro::carregarPassageiros();
     
@@ -64,12 +80,12 @@ int main() {
         system(LIMPAR_CONSOLE);
         switch (opcao) {
             case 1: {
-                aviao.cadastrarAviao();
+                aviaoController.cadastrarAviao();
                 esperarRetorno();
                 break;
             }
             case 2: {
-                aviao.visualizarAvioes();
+                aviaoController.visualizarAvioes();
                 esperarRetorno();
                 break;
             }
@@ -124,31 +140,36 @@ int main() {
                 break;
             }
             case 7: {
-                voo.cadastrarVoo();
+                vooController.cadastrarVoo();
                 esperarRetorno();
                 break;
             }
             case 8: {
-                cout << "Cadastrar assento (em desenvolvimento)" << endl;
+                vooController.visualizarVoos();
                 esperarRetorno();
                 break;
             }
             case 9: {
-                cout << "Fazer reserva (em desenvolvimento)" << endl;
+                cout << "Cadastrar assento (em desenvolvimento)" << endl;
                 esperarRetorno();
                 break;
             }
             case 10: {
-                cout << "Baixa reserva (em desenvolvimento)" << endl;
+                cout << "Fazer reserva (em desenvolvimento)" << endl;
                 esperarRetorno();
                 break;
             }
             case 11: {
-                cout << "Fidelidade (em desenvolvimento)" << endl;
+                cout << "Baixa reserva (em desenvolvimento)" << endl;
                 esperarRetorno();
                 break;
             }
             case 12: {
+                cout << "Fidelidade (em desenvolvimento)" << endl;
+                esperarRetorno();
+                break;
+            }
+            case 13: {
                 cout << "Saindo..." << endl;
                 break;
             }
@@ -158,7 +179,7 @@ int main() {
                 break;
             }
         }
-    } while (opcao != 12);
+    } while (opcao != 13);
 
     return 0;
 }
