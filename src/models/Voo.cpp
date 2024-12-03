@@ -63,6 +63,49 @@ string Voo::getStatus() const {
 float Voo::getTarifa() const {
     return this->tarifa;
 }
+Voo::Voo(int numAssentos) : numAssentos(numAssentos) {
+    for (int i = 1; i <= numAssentos; ++i) {
+        assentos.emplace_back(i);
+    }
+}
+
+Assento* Voo::getAssento(int numero) {
+    if (numero < 1 || numero > numAssentos) {
+        return nullptr;
+    }
+    return &assentos[numero - 1];
+}
+
+bool Voo::reservarAssento(int numero, Passageiro* passageiro) {
+    if (numero < 1 || numero > numAssentos) {
+        return false;
+    }
+    Assento* assento = getAssento(numero);
+    if (assento && !assento->Ocupado()) {
+        assento->reservar(passageiro);
+        return true;
+    }
+    return false;
+}
+
+void Voo::liberarAssento(int numero) {
+    if (numero < 1 || numero > numAssentos) {
+        return;
+    }
+    Assento* assento = getAssento(numero);
+    if (assento) {
+        assento->liberar();
+    }
+}
+
+void Voo::cadastrarAssento(int numero) {
+    if (numero < 1 || numero > numAssentos) {
+        std::cout << "Número de assento inválido." << std::endl;
+        return;
+    }
+    assentos.emplace_back(numero);
+    std::cout << "Assento " << numero << " cadastrado com sucesso." << std::endl;
+}
 
 int Voo::getAssentosDisponiveis() const {
     return this->assentos_disponiveis;

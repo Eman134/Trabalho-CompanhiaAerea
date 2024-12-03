@@ -15,7 +15,7 @@ public:
     VooController();
 
     Voo* buscarVoo(int codigo_voo);
-
+    int getNumeroVoos() const;
     void cadastrarVoo();
     void visualizarVoos() const;
     void editarVoo(int codigo_voo);

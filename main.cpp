@@ -150,7 +150,22 @@ int main() {
                 break;
             }
             case 9: {
-                cout << "Cadastrar assento (em desenvolvimento)" << endl;
+               if (vooController.getNumeroVoos() == 0) {
+                    cout << "Nenhum voo cadastrado!" << endl;
+                } else {
+                    int codigoVoo;
+                    cout << "Digite o código do voo: ";
+                    cin >> codigoVoo;
+                    Voo* voo = vooController.buscarVoo(codigoVoo);
+                    if (voo) {
+                        int numeroAssento;
+                        cout << "Digite o número do assento a ser cadastrado: ";
+                        cin >> numeroAssento;
+                        voo->cadastrarAssento(numeroAssento);
+                    } else {
+                        cout << "Voo não encontrado!" << endl;
+                    }
+                }
                 esperarRetorno();
                 break;
             }
