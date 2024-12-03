@@ -2,7 +2,7 @@
 #define ASSENTO_H
 
 #include <string>
-#include "Passageiro.h"
+#include "../../modulos/Passageiro.h"
 
 // Classe que representa um assento em um voo
 class Assento {
