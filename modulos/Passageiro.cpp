@@ -47,13 +47,12 @@ void Passageiro::setPontosFidelidade(int pontos_fidelidade) { this->pontos_fidel
 bool Passageiro::verificarDuplicidade(int codigo_passageiro) {
     for (const auto& passageiro : lista_passageiros) {
         if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
-            return true; 
+            return true;
         }
     }
-    return false; 
+    return false;
 }
 
-// Função para cadastrar um novo passageiro
 void Passageiro::cadastrarPassageiro() {
     int codigo_passageiro;
     string nome;
@@ -65,12 +64,11 @@ void Passageiro::cadastrarPassageiro() {
     cout << "Digite o código do passageiro: ";
     cin >> codigo_passageiro;
 
-    // Verifica se o código já foi cadastrado
     if (verificarDuplicidade(codigo_passageiro)) {
         cout << "Erro: Passageiro com este código já existe!" << endl;
-        return; 
+        return;
     }
-    // Solicita dados do passageiro
+
     cout << "Digite o nome do passageiro: ";
     cin.ignore();
     getline(cin, nome);
@@ -83,33 +81,36 @@ void Passageiro::cadastrarPassageiro() {
     cout << "Digite os pontos de fidelidade do passageiro: ";
     cin >> pontos_fidelidade;
 
-    // Cria um novo passageiro e adiciona na lista
     Passageiro novo_passageiro(codigo_passageiro, nome, endereco, telefone, fidelidade, pontos_fidelidade);
     lista_passageiros.push_back(novo_passageiro);
-
-    // Chama a função para salvar os dados no arquivo
     salvarPassageiros();
     cout << "Passageiro cadastrado com sucesso!" << endl;
 }
 
-// Função para salvar a lista de passageiros em um arquivo
+// Função para salvar a lista de passageiros em um arquivo binário
 void Passageiro::salvarPassageiros() {
-    ofstream arquivo("passageiros.txt");
+    ofstream arquivo("passageiros.bin", ios::binary);
     for (const auto& passageiro : lista_passageiros) {
-        arquivo << passageiro.getCodigoPassageiro() << "\n"
-                << passageiro.getNome() << "\n"
-                << passageiro.getEndereco() << "\n"
-                << passageiro.getTelefone() << "\n"
-                << passageiro.isFidelidade() << "\n"
-                << passageiro.getPontosFidelidade() << "\n";
+        arquivo.write(reinterpret_cast<const char*>(&passageiro.codigo_passageiro), sizeof(passageiro.codigo_passageiro));
+        size_t size = passageiro.nome.size();
+        arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
+        arquivo.write(passageiro.nome.c_str(), size);
+        size = passageiro.endereco.size();
+        arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
+        arquivo.write(passageiro.endereco.c_str(), size);
+        size = passageiro.telefone.size();
+        arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
+        arquivo.write(passageiro.telefone.c_str(), size);
+        arquivo.write(reinterpret_cast<const char*>(&passageiro.fidelidade), sizeof(passageiro.fidelidade));
+        arquivo.write(reinterpret_cast<const char*>(&passageiro.pontos_fidelidade), sizeof(passageiro.pontos_fidelidade));
     }
-    arquivo.close(); 
+    arquivo.close();
 }
 
-// Função para carregar a lista de passageiros de um arquivo
+// Função para carregar a lista de passageiros de um arquivo binário
 void Passageiro::carregarPassageiros() {
-    ifstream arquivo("passageiros.txt");
-    if (!arquivo.is_open()) return; 
+    ifstream arquivo("passageiros.bin", ios::binary);
+    if (!arquivo.is_open()) return;
 
     int codigo_passageiro;
     string nome;
@@ -119,36 +120,42 @@ void Passageiro::carregarPassageiros() {
     int pontos_fidelidade;
 
     // Lê os dados do arquivo e adiciona na lista
-    while (arquivo >> codigo_passageiro) {
-        arquivo.ignore();
-        getline(arquivo, nome);
-        getline(arquivo, endereco);
-        getline(arquivo, telefone);
-        arquivo >> fidelidade;
-        arquivo >> pontos_fidelidade;
+    while (arquivo.read(reinterpret_cast<char*>(&codigo_passageiro), sizeof(codigo_passageiro))) {
+        size_t size;
+        arquivo.read(reinterpret_cast<char*>(&size), sizeof(size));
+        nome.resize(size);
+        arquivo.read(&nome[0], size);
+        arquivo.read(reinterpret_cast<char*>(&size), sizeof(size));
+        endereco.resize(size);
+        arquivo.read(&endereco[0], size);
+        arquivo.read(reinterpret_cast<char*>(&size), sizeof(size));
+        telefone.resize(size);
+        arquivo.read(&telefone[0], size);
+        arquivo.read(reinterpret_cast<char*>(&fidelidade), sizeof(fidelidade));
+        arquivo.read(reinterpret_cast<char*>(&pontos_fidelidade), sizeof(pontos_fidelidade));
         
         // Cria um objeto Passageiro e adiciona na lista
         Passageiro passageiro(codigo_passageiro, nome, endereco, telefone, fidelidade, pontos_fidelidade);
         lista_passageiros.push_back(passageiro);
     }
-    arquivo.close(); 
+    arquivo.close();
 }
 
-// Função para buscar um passageiro pelo código
-Passageiro* Passageiro::buscarPassageiro(int codigo_passageiro) {
+Passageiro* Passageiro::buscarPassageiroPorCodigo(int codigo_passageiro) {
     for (auto& passageiro : lista_passageiros) {
         if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
-            return &passageiro;  
+            return &passageiro;
         }
     }
     return nullptr;
 }
 // Função para buscar um passageiro pelo nome
-Passageiro* Passageiro::buscarPassageiro(const string& nome) {
+
+Passageiro* Passageiro::buscarPassageiroPorNome(const string& nome) {
     for (auto& passageiro : lista_passageiros) {
         if (passageiro.getNome() == nome) {
-            return &passageiro; 
+            return &passageiro;
         }
     }
-    return nullptr; 
+    return nullptr;
 }
