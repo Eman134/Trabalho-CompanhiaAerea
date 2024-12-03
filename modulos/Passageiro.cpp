@@ -3,9 +3,9 @@
 #include <vector>
 #include <fstream>
 
-vector<Passageiro> lista_passageiros;
-
 using namespace std;
+
+vector<Passageiro> lista_passageiros;
 
 // Construtor que inicializa um passageiro com os dados fornecidos
 Passageiro::Passageiro(int codigo_passageiro, string nome, string endereco, string telefone, bool fidelidade, int pontos_fidelidade) {
