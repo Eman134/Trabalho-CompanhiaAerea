@@ -2,9 +2,13 @@
 #define VOO_H
 
 #include <string>
+#include <vector>
+#include "Assento.h"
+#include "Passageiro.h"
 
 using namespace std;
 
+// Classe voo
 class Voo {
     private:
         int codigo_voo;
