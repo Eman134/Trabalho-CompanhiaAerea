@@ -2,9 +2,8 @@
 #include <iostream>
 using namespace std;
 
-tripulacao::tripulacao(int codigo, string nome, string cargo, string telefone)
-    : codigoTripulacao(codigo), nomeTripulacao(nome), cargoTripulacao(cargo), telefoneTripulacao(telefone) {}
-
+tripulacao::tripulacao(int codigo, string nome, string cargo, string telefone, bool disponivel)
+    :codigoTripulacao(codigo), nomeTripulacao(nome), cargoTripulacao(cargo), telefoneTripulacao(telefone) {}
 int tripulacao::getCodigoTripulacao() const {
     return this->codigoTripulacao;
 }
@@ -43,4 +42,11 @@ void tripulacao::salvar() {
 
 void tripulacao::carregar() {
     cout << "Tripulação carregada!" << endl;
+}
+
+tripulacao::tripulacao() {
+    codigoTripulacao = 0;
+    nomeTripulacao = "";
+    cargoTripulacao = "";
+    telefoneTripulacao = "";
 }
