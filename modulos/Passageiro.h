@@ -13,7 +13,7 @@ private:
     bool fidelidade;         
     int pontos_fidelidade;
 public:
-     // Construtor com parâmetros para inicializar todos os atributos
+    // Construtor com parâmetros para inicializar todos os atributos
     Passageiro(int codigo_passageiro, std::string nome, std::string endereco, std::string telefone, bool fidelidade, int pontos_fidelidade);
     
     // Construtor padrão, que inicializa os atributos com valores padrão
@@ -33,16 +33,18 @@ public:
     void setEndereco(std::string endereco);            
     void setTelefone(std::string telefone);            
     void setFidelidade(bool fidelidade);               
-    void setPontosFidelidade(int pontos_fidelidade); 
+    void setPontosFidelidade(int pontos_fidelidade);
 
-    // Métodos estáticos da classe, utilizados para manipulação de múltiplos passageiros:
-    static bool verificarDuplicidade(int codigo_passageiro);  
-    static void cadastrarPassageiro(); 
-    static void salvarPassageiros(); 
+    // Métodos estáticos para operações com a lista de passageiros:
+    static bool verificarDuplicidade(int codigo_passageiro);
+    static void cadastrarPassageiro();
+    static void salvarPassageiros();
     static void carregarPassageiros();
-    static Passageiro* buscarPassageiro(int codigo_passageiro);  
-    static Passageiro* buscarPassageiro(const std::string& nome);
+    static Passageiro* buscarPassageiroPorCodigo(int codigo_passageiro);
+    static Passageiro* buscarPassageiroPorNome(const std::string& nome);
 };
-// Declaração de uma variável global que representa a lista de passageiros
+
+// Declaração da lista de passageiros como uma variável global
 extern std::vector<Passageiro> lista_passageiros;
-#endif 
+
+#endif // PASSAGEIRO_H

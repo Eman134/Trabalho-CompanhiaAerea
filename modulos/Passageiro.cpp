@@ -43,7 +43,6 @@ void Passageiro::setTelefone(string telefone) { this->telefone = telefone; }
 void Passageiro::setFidelidade(bool fidelidade) { this->fidelidade = fidelidade; }
 void Passageiro::setPontosFidelidade(int pontos_fidelidade) { this->pontos_fidelidade = pontos_fidelidade; }
 
-// Função para verificar se já existe um passageiro com o mesmo código
 bool Passageiro::verificarDuplicidade(int codigo_passageiro) {
     for (const auto& passageiro : lista_passageiros) {
         if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
@@ -141,6 +140,7 @@ void Passageiro::carregarPassageiros() {
     arquivo.close();
 }
 
+// Função para buscar um passageiro pelo código
 Passageiro* Passageiro::buscarPassageiroPorCodigo(int codigo_passageiro) {
     for (auto& passageiro : lista_passageiros) {
         if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
@@ -149,8 +149,8 @@ Passageiro* Passageiro::buscarPassageiroPorCodigo(int codigo_passageiro) {
     }
     return nullptr;
 }
-// Função para buscar um passageiro pelo nome
 
+// Função para buscar um passageiro pelo nome
 Passageiro* Passageiro::buscarPassageiroPorNome(const string& nome) {
     for (auto& passageiro : lista_passageiros) {
         if (passageiro.getNome() == nome) {
