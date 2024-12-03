@@ -11,8 +11,6 @@ class VooController {
 private:
     vector<Voo> lista_voos;
 
-    void criarDiretorioLocal();
-
 public:
     VooController();
 
@@ -23,7 +21,6 @@ public:
     void editarVoo(int codigo_voo);
     void excluirVoo(int codigo_voo);
     void carregarVoos();
-    void salvarVoos();
     int voosCadastrados() const;
     int getProximoCodigo() const;
 };

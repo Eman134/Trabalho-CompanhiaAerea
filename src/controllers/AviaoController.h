@@ -11,16 +11,15 @@ class AviaoController {
 private:
     vector<Aviao> lista_avioes;
 
-    void criarDiretorioLocal();
-
 public:
     AviaoController();
     void carregarAvioes();
-    void salvarAvioes();
 
     Aviao* buscarAviao(int codigo_aviao);
 
     void cadastrarAviao();
+    void editarAviao(int codigo_aviao);
+    void excluirAviao(int codigo_aviao);
     void visualizarAvioes() const;
     
     int avioesCadastrados() const;
