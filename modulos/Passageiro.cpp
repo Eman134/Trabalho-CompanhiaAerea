@@ -141,7 +141,7 @@ void Passageiro::carregarPassageiros() {
 }
 
 // Função para buscar um passageiro pelo código
-Passageiro* Passageiro::buscarPassageiroPorCodigo(int codigo_passageiro) {
+Passageiro* Passageiro::buscarPassageiro(int codigo_passageiro) {
     for (auto& passageiro : lista_passageiros) {
         if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
             return &passageiro;
@@ -151,7 +151,7 @@ Passageiro* Passageiro::buscarPassageiroPorCodigo(int codigo_passageiro) {
 }
 
 // Função para buscar um passageiro pelo nome
-Passageiro* Passageiro::buscarPassageiroPorNome(const string& nome) {
+Passageiro* Passageiro::buscarPassageiro(const string& nome) {
     for (auto& passageiro : lista_passageiros) {
         if (passageiro.getNome() == nome) {
             return &passageiro;
