@@ -4,9 +4,53 @@
 #include <locale.h>
 #include <cctype>  // Para isdigit()
 #include <algorithm>  // Para all_of()
+
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+
 using namespace std;
 
-TripulacaoController::TripulacaoController() : codigoCounter(1), qtdPiloto(0), qtdCopiloto(0), qtdComissario(0) {}
+TripulacaoController::TripulacaoController() {
+    carregarTripulacao();
+    codigoCounter = tripulacoes.empty() ? 1 : tripulacoes.back().getCodigoTripulacao() + 1;
+}
+
+int TripulacaoController::getQtdPiloto() const {
+
+    int qtdPiloto = 0;
+    for (const auto& t : tripulacoes) {
+        if (t.getCargoTripulacao() == "Piloto") {
+            qtdPiloto++;
+        }
+    }
+
+    return qtdPiloto;
+}
+int TripulacaoController::getQtdCopiloto() const {
+
+    int qtdCopiloto = 0;
+    for (const auto& t : tripulacoes) {
+        if (t.getCargoTripulacao() == "Copiloto") {
+            qtdCopiloto++;
+        }
+    }
+
+    return qtdCopiloto;
+}
+int TripulacaoController::getQtdComissario() const {
+
+    int qtdComissario = 0;
+    for (const auto& t : tripulacoes) {
+        if (t.getCargoTripulacao() == "Comissario") {
+            qtdComissario++;
+        }
+    }
+
+    return qtdComissario;
+}
 
 void TripulacaoController::cadastrarTripulacao() {
     string nome, cargo, telefone;
@@ -19,19 +63,20 @@ void TripulacaoController::cadastrarTripulacao() {
 
     // Garantir que o cargo não esteja vazio
     do {
-        cout << "Informe o cargo do tripulante (1 para piloto - 2 para co-piloto - 3 para comissário): " << endl;
+        cout << "Informe o id do cargo do tripulante:" << endl;
+        cout << "1 - Piloto" << endl;
+        cout << "2 - Co-piloto" << endl;
+        cout << "3 - Comissario" << endl;
+
         cin >> cargo_teste;  // Usar getline para aceitar espaços no cargo
         if(cargo_teste == 1) {
             cargo = "Piloto";
-            qtdPiloto++;
         }
         else if(cargo_teste == 2) {
             cargo = "Co-piloto";
-            qtdCopiloto++;
         }
         else if(cargo_teste == 3) {
-            cargo = "Comissário";
-            qtdComissario++;
+            cargo = "Comissario";
         }
     } while (cargo_teste < 1 || cargo_teste > 3);
 
@@ -41,7 +86,7 @@ void TripulacaoController::cadastrarTripulacao() {
 
     Tripulacao novoTripulante(codigoCounter++, nome, cargo, telefone, disponivel);
     tripulacoes.push_back(novoTripulante);  // Adiciona a tripulação ao vetor
-    cout << "Tripulação cadastrada com sucesso!" << endl;
+    cout << GREEN << "Tripulacao cadastrada com sucesso!" << RESET << endl;
 }
 
 vector<Tripulacao> TripulacaoController::getTripulacoes() const {
@@ -62,9 +107,9 @@ void TripulacaoController::listarTripulacao(){
         cout << "Telefone: " << t.getTelefoneTripulacao() << endl;
         cout << "---------------------------\n" << endl;
     }
-    cout << "Piloto: " << qtdPiloto << endl;
-    cout << "Co-piloto: " << qtdCopiloto << endl;
-    cout << "Comissário: " << qtdComissario<< endl;
+    cout << "Piloto: " << getQtdPiloto() << endl;
+    cout << "Co-piloto: " << getQtdCopiloto() << endl;
+    cout << "Comissario: " << getQtdComissario() << endl;
 }
 
 void TripulacaoController::salvarTripulacao() {
