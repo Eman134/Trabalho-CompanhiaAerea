@@ -1,8 +1,18 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include "Voo.h"
 #include "Aviao.h"
+#include "Assento.h"
+#include <algorithm>
 #include "../controllers/AviaoController.h"
+#include "../../modulos/Passageiro.h"
+
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
 
 using namespace std;
 
@@ -19,6 +29,7 @@ Voo::Voo() {
     this->status = "";
     this->tarifa = 0.0f;
     this->assentos_disponiveis = 0;
+    this->numAssentos = 50;
 }
 
 int Voo::getCodigoVoo() const {
@@ -64,26 +75,79 @@ string Voo::getStatus() const {
 float Voo::getTarifa() const {
     return this->tarifa;
 }
-Voo::Voo(int numAssentos) : numAssentos(numAssentos) {
-    for (int i = 1; i <= numAssentos; ++i) {
-        assentos.emplace_back(i);
+
+Assento* Voo::getAssento(int numeroassento) {
+    auto it = find_if(assentos.begin(), assentos.end(),
+                      [numeroassento](const Assento& assento) { return assento.getNumero() == numeroassento; });
+    if (it != assentos.end()) {
+        return &(*it);
     }
+    return nullptr;
 }
 
-Assento* Voo::getAssento(int numero) {
-    if (numero < 1 || numero > numAssentos) {
-        return nullptr;
-    }
-    return &assentos[numero - 1];
+vector<Assento> Voo::getAssentos() const {
+    return assentos;
 }
+
+vector<Assento> Voo::getAssentosOcupados() const {
+    vector<Assento> ocupados;
+    for (const auto& assento : assentos) {
+        if (assento.Ocupado()) {
+            ocupados.push_back(assento);
+        }
+    }
+    return ocupados;
+}
+
+void Voo::exibirTabelaAssentos(int linhas = 5, int colunas = 10) {
+    cout << "Tabela de assentos (verde = disponivel, vermelho = ocupado):\n";
+
+    cout << "   ";
+    for (int j = 0; j < colunas; ++j) {
+        cout << setw(4) << j + 1;
+    }
+    cout << endl;
+
+    // pegar assentos ocupados
+    vector<Assento> assentos = getAssentosOcupados();
+
+    printf(assentos.size() > 0 ? "Assentos ocupados: %d\n" : "Nenhum assento ocupado.\n", assentos.size());
+
+    for (int i = 0; i < linhas; ++i) {
+        cout << setw(2) << char('A' + i) << " ";
+        for (int j = 0; j < colunas; ++j) {
+            int numeroAssento = i * colunas + j + 1;
+            auto it = find_if(assentos.begin(), assentos.end(),
+                              [numeroAssento](const Assento& assento) { return assento.getNumero() == numeroAssento; });
+            if (it != assentos.end() && it->Ocupado()) {
+                cout << RED << setw(4) << numeroAssento << RESET;
+            } else {
+                cout << GREEN << setw(4) << numeroAssento << RESET;
+            }
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
 
 bool Voo::reservarAssento(int numero, Passageiro* passageiro) {
     if (numero < 1 || numero > numAssentos) {
         return false;
     }
-    Assento* assento = getAssento(numero);
-    if (assento && !assento->Ocupado()) {
+    Assento* assento;
+
+    if (getAssento(numero)) {
+        assento = getAssento(numero);
+    } else {
+        assento = new Assento(numero);
+    }
+
+    bool ocupado = assento->Ocupado();
+    if (!ocupado) {
         assento->reservar(passageiro);
+        setAssentosDisponiveis(getAssentosDisponiveis() - 1);
+        assentos.push_back(*assento);
         return true;
     }
     return false;
@@ -199,6 +263,22 @@ void Voo::salvar(ostream& out) const {
     out.write((char*)&tarifa, sizeof(tarifa));
     out.write((char*)&assentos_disponiveis, sizeof(assentos_disponiveis));
 
+    // Salve os assentos
+    int numAssentos = assentos.size();
+    out.write((char*)&numAssentos, sizeof(numAssentos));
+
+    for (const Assento& assento : assentos) {
+        int numero = assento.getNumero();
+        Passageiro* passageiro = assento.getPassageiro();
+        bool ocupado = assento.Ocupado();
+        out.write((char*)&numero, sizeof(numero));
+        out.write((char*)&ocupado, sizeof(ocupado));
+        if (ocupado) {
+            int codigoPassageiro = passageiro->getCodigoPassageiro();
+            out.write((char*)&codigoPassageiro, sizeof(codigoPassageiro));
+        }
+    }
+
 }
 
 void Voo::carregar(std::istream& in) {
@@ -251,5 +331,25 @@ void Voo::carregar(std::istream& in) {
     // Leia os demais dados
     in.read((char*)&tarifa, sizeof(tarifa));
     in.read((char*)&assentos_disponiveis, sizeof(assentos_disponiveis));
-}
 
+    // Carregar os assentos
+    int numAssentos;
+    in.read((char*)&numAssentos, sizeof(numAssentos));
+    assentos.clear();
+
+    for (int i = 0; i < numAssentos; ++i) {
+        int numero;
+        bool ocupado;
+        in.read((char*)&numero, sizeof(numero));
+        in.read((char*)&ocupado, sizeof(ocupado));
+        Passageiro* passageiro = nullptr;
+        Assento assento(numero);
+        if (ocupado) {
+            int codigoPassageiro;
+            in.read((char*)&codigoPassageiro, sizeof(codigoPassageiro));
+            passageiro = Passageiro::buscarPassageiro(codigoPassageiro);
+            assento.reservar(passageiro);
+        }
+        assentos.push_back(assento);
+    }
+}

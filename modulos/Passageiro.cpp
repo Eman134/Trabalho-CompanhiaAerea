@@ -15,6 +15,7 @@ Passageiro::Passageiro(int codigo_passageiro, string nome, string endereco, stri
     this->telefone = telefone;
     this->fidelidade = fidelidade;
     this->pontos_fidelidade = pontos_fidelidade;
+    carregarPassageiros();
 }
 
 // Construtor padrão que inicializa um passageiro com valores padrão
@@ -25,6 +26,7 @@ Passageiro::Passageiro() {
     this->telefone = "";
     this->fidelidade = false;
     this->pontos_fidelidade = 0;
+    carregarPassageiros();
 }
 
 // Métodos getter para acessar os atributos privados de um passageiro
@@ -110,6 +112,8 @@ void Passageiro::salvarPassageiros() {
 void Passageiro::carregarPassageiros() {
     ifstream arquivo("./db/passageiros.bin", ios::binary);
     if (!arquivo.is_open()) return;
+
+    lista_passageiros.clear();
 
     int codigo_passageiro;
     string nome;

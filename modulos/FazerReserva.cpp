@@ -84,6 +84,7 @@ void Reserva::cadastrarReserva(VooController* vooController, Passageiro* passage
                     cout << RED << "Voo lotado. Escolha outro voo: " << RESET << endl;
                     continue;
                 }
+
                 break;
             }
             cout << RED << "Voo nao encontrado. Digite um codigo valido: " << RESET << endl;
@@ -114,10 +115,29 @@ void Reserva::cadastrarReserva(VooController* vooController, Passageiro* passage
         }
     }
 
+    voo->exibirTabelaAssentos(5, 10);
+
+    int numeroAssento;
+
+    cout << YELLOW << "Digite o numero do assento para fazer a reserva: " << RESET;
+
+    while (true) {
+        cin >> numeroAssento;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << RED << "Numero de assento invalido. Digite um numero valido: " << RESET;
+        } else {
+            if (voo->reservarAssento(numeroAssento, passageiro)) {
+                break;
+            }
+            cout << RED << "Assento ocupado ou invalido. Digite um numero valido: " << RESET << endl;
+        }
+    }
+
     this->codigoPassageiro = passageiro->getCodigoPassageiro();
 
     cout << "Reserva realizada com sucesso!" << endl;
-    voo->setAssentosDisponiveis(voo->getAssentosDisponiveis() - 1);
     vooController->salvarVoos();
 }
 

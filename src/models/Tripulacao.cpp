@@ -51,11 +51,3 @@ void Tripulacao::setCargoTripulacao(string cargo) {
 void Tripulacao::setTelefoneTripulacao(string telefone) {
     this->telefoneTripulacao = telefone;
 }
-
-void Tripulacao::salvar() {
-    cout << "Tripulação salva com sucesso!" << endl;
-}
-
-void Tripulacao::carregar() {
-    cout << "Tripulação carregada!" << endl;
-}

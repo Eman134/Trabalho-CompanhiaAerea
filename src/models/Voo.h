@@ -27,7 +27,6 @@ class Voo {
         int numAssentos;
     public:
         Voo();
-        Voo(int numAssentos);
         int getCodigoVoo() const;
         int getCodigoAviao() const;
         int getCodigoPiloto() const;
@@ -42,6 +41,9 @@ class Voo {
         int getAssentosDisponiveis() const;
         int getAssentosTotais() const;
         Assento* getAssento(int numero);
+        vector<Assento> getAssentos() const;
+        vector<Assento> getAssentosOcupados() const;
+        void exibirTabelaAssentos(int linhas, int colunas);
         bool reservarAssento(int numero, Passageiro* passageiro);
         void liberarAssento(int numero);
         void cadastrarAssento(int numero); // Adicionando a função de cadastrar assento

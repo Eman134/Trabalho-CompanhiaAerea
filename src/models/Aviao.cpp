@@ -11,7 +11,7 @@ Aviao::Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos, bool disponi
 Aviao::Aviao() {
     this->codigo_aviao = 0;
     this->nome_aviao = "";
-    this->qtd_assentos = 0;
+    this->qtd_assentos = 50;
     this->disponivel = true;
 }
 

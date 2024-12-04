@@ -3,6 +3,7 @@
 
 #include "../models/Voo.h"
 #include "AviaoController.h"
+#include "TripulacaoController.h"
 #include <vector>
 #include <fstream>
 
@@ -22,10 +23,9 @@ public:
     vector<Voo> getListaVoos() const;
 
     void salvarVoos();
-    void cadastrarVoo(AviaoController* aviaoController);
+    void cadastrarVoo(AviaoController* aviaoController, TripulacaoController* tripulacaoController);
     void visualizarVoos() const;
-    void editarVoo(int codigo_voo);
-    void excluirVoo(int codigo_voo);
+    void darBaixaVoo(int codigo_voo);
     int voosCadastrados() const;
     int getProximoCodigo() const;
 };
