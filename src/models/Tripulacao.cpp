@@ -7,7 +7,10 @@ Tripulacao::Tripulacao(int codigo, string nome, string cargo, string telefone, b
     nomeTripulacao = nome;
     cargoTripulacao = cargo;
     telefoneTripulacao = telefone;
-    disponibilidade = disponivel;
+    disponivel = disponivel;
+}
+bool Tripulacao::getDisponivel() const {
+    return disponivel;
 }
 
 Tripulacao::Tripulacao() {

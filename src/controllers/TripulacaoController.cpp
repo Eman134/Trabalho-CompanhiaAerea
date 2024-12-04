@@ -1,5 +1,6 @@
 #include "TripulacaoController.h"
 #include <iostream>
+#include <fstream>
 #include <locale.h>
 #include <cctype>  // Para isdigit()
 #include <algorithm>  // Para all_of()
@@ -32,21 +33,13 @@ void TripulacaoController::cadastrarTripulacao() {
             cargo = "Comissário";
             qtdComissario++;
         }
-    } while(cargo_teste < 1 || cargo_teste > 3);
+    } while (cargo_teste < 1 || cargo_teste > 3);
 
-    cout << "O cargo escolhido foi: " << cargo << endl;
+    cout << "Informe o telefone do tripulante: " << endl;
+    cin.ignore();
+    getline(cin, telefone);
 
-    cout << "Informe o telefone do tripulante (somente números):" << endl;
-    cin >> telefone;
-
-    // Verificando se o telefone tem exatamente 11 dígitos e se contém apenas números
-    while (telefone.length() != 11 || !all_of(telefone.begin(), telefone.end(), ::isdigit)) {
-        cout << "Informe um telefone válido com 11 dígitos (somente números): " << endl;
-        cin >> telefone;
-    }
-
-    // Gerar o código automaticamente
-    Tripulacao novoTripulante(codigoCounter++, nome, cargo, telefone, disponivel);  // Usando o contador para gerar código
+    Tripulacao novoTripulante(codigoCounter++, nome, cargo, telefone, disponivel);
     tripulacoes.push_back(novoTripulante);  // Adiciona a tripulação ao vetor
     cout << "Tripulação cadastrada com sucesso!" << endl;
 }
@@ -72,4 +65,50 @@ void TripulacaoController::listarTripulacao(){
     cout << "Piloto: " << qtdPiloto << endl;
     cout << "Co-piloto: " << qtdCopiloto << endl;
     cout << "Comissário: " << qtdComissario<< endl;
+}
+
+void TripulacaoController::salvarTripulacao() {
+    ofstream arquivo("./db/tripulacao.bin", ios::binary);
+    for (const auto& tripulante : tripulacoes) {
+        int codigo = tripulante.getCodigoTripulacao();
+        arquivo.write(reinterpret_cast<const char*>(&codigo), sizeof(codigo));
+        size_t size = tripulante.getNomeTripulacao().size();
+        arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
+        arquivo.write(tripulante.getNomeTripulacao().c_str(), size);
+        size = tripulante.getCargoTripulacao().size();
+        arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
+        arquivo.write(tripulante.getCargoTripulacao().c_str(), size);
+        size = tripulante.getTelefoneTripulacao().size();
+        arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
+        arquivo.write(tripulante.getTelefoneTripulacao().c_str(), size);
+        bool disponivel = tripulante.getDisponivel();
+        arquivo.write(reinterpret_cast<const char*>(&disponivel), sizeof(disponivel));
+    }
+}
+
+void TripulacaoController::carregarTripulacao() {
+    ifstream arquivo("./db/tripulacao.bin", ios::binary);
+    if (!arquivo.is_open()) return;
+
+    while (arquivo.peek() != EOF) {
+        int codigo;
+        string nome, cargo, telefone;
+        bool disponivel;
+
+        arquivo.read(reinterpret_cast<char*>(&codigo), sizeof(codigo));
+        size_t size;
+        arquivo.read(reinterpret_cast<char*>(&size), sizeof(size));
+        nome.resize(size);
+        arquivo.read(&nome[0], size);
+        arquivo.read(reinterpret_cast<char*>(&size), sizeof(size));
+        cargo.resize(size);
+        arquivo.read(&cargo[0], size);
+        arquivo.read(reinterpret_cast<char*>(&size), sizeof(size));
+        telefone.resize(size);
+        arquivo.read(&telefone[0], size);
+        arquivo.read(reinterpret_cast<char*>(&disponivel), sizeof(disponivel));
+
+        Tripulacao tripulante(codigo, nome, cargo, telefone, disponivel);
+        tripulacoes.push_back(tripulante);
+    }
 }

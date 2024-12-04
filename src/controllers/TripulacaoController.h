@@ -27,11 +27,10 @@ public:
     void setqtdCopiloto(int qtdCopiloto);
     void setqtdComissario(int qtdComissario);
 
-    // Fun��o para cadastrar uma tripula��o
     void cadastrarTripulacao();
-
-    // Fun��o para listar todas as tripula��es cadastradas
     void listarTripulacao();
+    void salvarTripulacao();
+    void carregarTripulacao();
 };
 
 #endif

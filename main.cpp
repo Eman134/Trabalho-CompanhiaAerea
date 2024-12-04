@@ -84,6 +84,7 @@ int main() {
     Reserva reserva;
     Passageiro passageiro;
     Passageiro::carregarPassageiros();
+    tripulacaoController.carregarTripulacao();
 
     int opcao;
     do {
@@ -94,6 +95,7 @@ int main() {
             case 1: {
                 cout << GREEN << "Cadastrar aviao iniciado..." << RESET << endl;
                 aviaoController.cadastrarAviao();
+                aviaoController.salvarAvioes();
                 esperarRetorno();
                 break;
             }
@@ -106,6 +108,7 @@ int main() {
             case 3: {
                 cout << GREEN << "Cadastro de tripulacao iniciado..." << RESET << endl;
                 tripulacaoController.cadastrarTripulacao();
+                tripulacaoController.salvarTripulacao();
                 esperarRetorno();
                 break;
             }
@@ -118,6 +121,7 @@ int main() {
             case 5: {
                 cout << GREEN << "Cadastro de passageiro iniciado..." << RESET << endl;
                 Passageiro::cadastrarPassageiro();
+                Passageiro::salvarPassageiros();
                 esperarRetorno();
                 break;
             }
@@ -157,6 +161,7 @@ int main() {
             case 7: {
                 cout << GREEN << "Cadastrar voo iniciado..." << RESET << endl;
                 vooController.cadastrarVoo(&aviaoController);
+                vooController.salvarVoos();
                 esperarRetorno();
                 break;
             }
@@ -179,6 +184,7 @@ int main() {
                         cout << "Digite o numero do assento a ser cadastrado: ";
                         cin >> numeroAssento;
                         voo->cadastrarAssento(numeroAssento);
+                        vooController.salvarVoos();
                     } else {
                         cout << "Voo nao encontrado!" << endl;
                     }

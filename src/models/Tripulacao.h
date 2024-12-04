@@ -10,7 +10,7 @@ class Tripulacao {
         string nomeTripulacao;
         string cargoTripulacao;
         string telefoneTripulacao;
-        bool disponibilidade;
+        bool disponivel;
 
     public:
         Tripulacao();
@@ -26,7 +26,7 @@ class Tripulacao {
         void setNomeTripulacao(string nome);
         void setCargoTripulacao(string cargo);
         void setTelefoneTripulacao(string telefone);
-        void setdisponibilidade(bool disponivel);
+        void setDisponivel(bool disponivel);
 
         void salvar();
         void carregar();
