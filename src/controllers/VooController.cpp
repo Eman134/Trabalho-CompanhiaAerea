@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <fstream>
 #include <limits>
+#include <iomanip>
 #ifdef _WIN32
     #include <direct.h>
 #endif
@@ -150,7 +151,7 @@ void VooController::cadastrarVoo(AviaoController* aviaoController) {
     cout << " " << endl;
 
     cout << GREEN << "Voo cadastrado com sucesso!" << RESET << endl;
-    
+
 }
 
 Voo* VooController::buscarVoo(int codigoVoo) {
@@ -173,18 +174,46 @@ void VooController::visualizarVoos() const {
         return;
     }
 
+    // for (const Voo& voo : lista_voos) {
+    //     cout << "Codigo do Voo: " << voo.getCodigoVoo() << endl;
+    //     cout << "Codigo do Aviao: " << voo.getCodigoAviao() << endl;
+    //     cout << "Codigo do Piloto: " << voo.getCodigoPiloto() << endl;
+    //     cout << "Codigo do Co-piloto: " << voo.getCodigoCopiloto() << endl;
+    //     cout << "Codigo do Comissario: " << voo.getCodigoComissario() << endl;
+    //     cout << "Origem: " << CYAN << voo.getOrigem() << RESET << " -> Destino: " << CYAN << voo.getDestino() << RESET << endl;
+    //     cout << "Data: " << voo.getData() << " Hora: " << voo.getHora() << endl;
+    //     cout << "Tarifa: R$" << voo.getTarifa() << endl;
+    //     cout << "Assentos disponiveis: [" << (voo.getAssentosDisponiveis() > 0 ? GREEN : RED) << voo.getAssentosDisponiveis() << "/" << voo.getAssentosTotais() << RESET << "]" << endl;
+    //     cout << "---------------------------" << endl;
+    // }
+
+    AviaoController aviaoController;
+    cout << "==================== LISTA DE VOOS ====================" << endl;
+
     for (const Voo& voo : lista_voos) {
-        cout << "Codigo do Voo: " << voo.getCodigoVoo() << endl;
-        cout << "Codigo do Aviao: " << voo.getCodigoAviao() << endl;
-        cout << "Codigo do Piloto: " << voo.getCodigoPiloto() << endl;
-        cout << "Codigo do Co-piloto: " << voo.getCodigoCopiloto() << endl;
-        cout << "Codigo do Comissario: " << voo.getCodigoComissario() << endl;
-        cout << "Origem: " << CYAN << voo.getOrigem() << RESET << " -> Destino: " << CYAN << voo.getDestino() << RESET << endl;
-        cout << "Data: " << voo.getData() << " Hora: " << voo.getHora() << endl;
-        cout << "Tarifa: R$" << voo.getTarifa() << endl;
-        cout << "Assentos disponiveis: [" << voo.getAssentosDisponiveis() << "/" << voo.getAssentosTotais() << "]" << endl;
-        cout << "---------------------------" << endl;
+
+        Aviao* aviao = aviaoController.buscarAviao(voo.getCodigoAviao());
+        string nomeAviao = aviao->getNomeAviao();
+
+        cout << "-------------------------------------------------------" << endl;
+        cout << CYAN << "Codigo do Voo: " << RESET << voo.getCodigoVoo() << endl;
+        cout << "Aviao: " << YELLOW << nomeAviao << " (" << voo.getCodigoAviao() << ")" << RESET << endl;
+        cout << "Piloto: " << voo.getCodigoPiloto()
+            << " | Co-piloto: " << voo.getCodigoCopiloto()
+            << " | Comissario: " << voo.getCodigoComissario() << endl;
+        cout << "Rota: " << CYAN << voo.getOrigem() << RESET
+            << " -> " << CYAN << voo.getDestino() << RESET << endl;
+        cout << "Data e Hora: " << voo.getData() << " as " << voo.getHora() << endl;
+        cout << "Tarifa: " << GREEN << "R$" << std::fixed << std::setprecision(2)
+            << voo.getTarifa() << RESET << endl;
+        cout << "Assentos disponíveis: "
+            << (voo.getAssentosDisponiveis() > 0 ? GREEN : RED)
+            << voo.getAssentosDisponiveis() << "/" << voo.getAssentosTotais() << RESET << endl;
     }
+
+    cout << "=======================================================" << endl;
+
+
 }
 
 int VooController::voosCadastrados() const {
