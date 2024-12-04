@@ -16,6 +16,7 @@ public:
     void carregarVoos();
 
     Voo* buscarVoo(int codigo_voo);
+    int getNumeroVoos() const;
 
     vector<Voo> getListaVoos() const;
 

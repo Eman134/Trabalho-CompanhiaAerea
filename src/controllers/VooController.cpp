@@ -129,13 +129,17 @@ void VooController::cadastrarVoo() {
     
 }
 
-Voo* VooController::buscarVoo(int codigo_voo) {
+Voo* VooController::buscarVoo(int codigoVoo) {
     for (auto& voo : lista_voos) {
-        if (voo.getCodigoVoo() == codigo_voo) {
+        if (voo.getCodigoVoo() == codigoVoo) {
             return &voo;
         }
     }
     return nullptr;
+}
+
+int VooController::getNumeroVoos() const {
+    return lista_voos.size();
 }
 
 void VooController::visualizarVoos() const {
