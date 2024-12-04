@@ -88,7 +88,7 @@ void Passageiro::cadastrarPassageiro() {
 
 // Função para salvar a lista de passageiros em um arquivo binário
 void Passageiro::salvarPassageiros() {
-    ofstream arquivo("passageiros.bin", ios::binary);
+    ofstream arquivo("./db/passageiros.bin", ios::binary);
     for (const auto& passageiro : lista_passageiros) {
         arquivo.write(reinterpret_cast<const char*>(&passageiro.codigo_passageiro), sizeof(passageiro.codigo_passageiro));
         size_t size = passageiro.nome.size();
@@ -108,7 +108,7 @@ void Passageiro::salvarPassageiros() {
 
 // Função para carregar a lista de passageiros de um arquivo binário
 void Passageiro::carregarPassageiros() {
-    ifstream arquivo("passageiros.bin", ios::binary);
+    ifstream arquivo("./db/passageiros.bin", ios::binary);
     if (!arquivo.is_open()) return;
 
     int codigo_passageiro;

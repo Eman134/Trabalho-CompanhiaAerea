@@ -52,8 +52,8 @@ class Voo {
         void setTarifa(float tarifa);
         void setAssentosDisponiveis(int assentos_disponiveis);
 
-        void salvar();
-        void carregar();
+        void salvar(ostream& out) const;
+        void carregar(istream& in);
 };
 
 #endif

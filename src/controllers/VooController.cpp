@@ -4,6 +4,7 @@
 #ifdef _WIN32
     #include <direct.h>
 #endif
+#include "AviaoController.h"
 
 using namespace std;
 
@@ -20,18 +21,40 @@ void VooController::carregarVoos() {
     }
 
     while (arquivo.peek() != EOF) {
-        Voo Voo;
-        Voo.carregar();
-        lista_voos.push_back(Voo);
+        Voo voo;
+        voo.carregar(arquivo);
+        lista_voos.push_back(voo);
     }
 
     arquivo.close();
+}
+
+vector<Voo> VooController::getListaVoos() const {
+    return lista_voos;
 }
 
 void VooController::cadastrarVoo() {
     Voo voo;
     int codigo_voo = getProximoCodigo();
     voo.setCodigoVoo(codigo_voo);
+
+    AviaoController aviaoController;
+
+    if (aviaoController.avioesCadastrados() == 0) {
+        cout << "Nenhum aviao cadastrado no sistema. Cadastre um aviao antes de cadastrar um voo." << endl;
+        return;
+    }
+
+    if (aviaoController.avioesDisponiveis() == 0) {
+        cout << "Nenhum aviao disponível no sistema. Cadastre um aviao ou espere o voo do aviao antes de cadastrar um novo voo." << endl;
+        return;
+    }
+
+    cout << "Aviões no sistema:" << endl;
+    for (const Aviao& aviao : aviaoController.getListaAvioes()) {
+        string disponivel = aviao.getDisponivel() ? "Disponivel" : "Indisponivel";
+        cout << "[" << disponivel << "] Codigo: " << aviao.getCodigoAviao() << " - Nome: " << aviao.getNomeAviao() << " - Assentos maximos: " << aviao.getQtdAssentos() << endl;
+    }
 
     string origem, destino, data;
     cout << "Digite a origem: ";
@@ -46,7 +69,12 @@ void VooController::cadastrarVoo() {
     cin >> data;
     voo.setData(data);
 
-    voo.salvar();
+    ofstream arquivo("./db/voos.bin", ios::binary | ios::trunc);
+    if (!arquivo) {
+        return;
+    }
+
+    voo.salvar(arquivo);
     lista_voos.push_back(voo);
 }
 

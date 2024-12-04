@@ -37,40 +37,31 @@ void Aviao::setQtdAssentos(int qtd_assentos) {
     this->qtd_assentos = qtd_assentos;
 }
 
-void Aviao::salvar() {
-    ofstream arquivo("./db/avioes.bin", ios::binary | ios::app);
-    if (!arquivo.is_open()) {
-        return;
-    }
-
-    arquivo.write((char*)&codigo_aviao, sizeof(codigo_aviao));
-
-    size_t tamanhoNome = nome_aviao.size();
-    arquivo.write((char*)&tamanhoNome, sizeof(tamanhoNome));
-    arquivo.write(nome_aviao.c_str(), tamanhoNome);
-
-    arquivo.write((char*)&qtd_assentos, sizeof(qtd_assentos));
-
-    arquivo.close();
-
+bool Aviao::getDisponivel() const {
+    return this->disponivel;
 }
 
-void Aviao::carregar() {
-    
-    ifstream arquivo("./db/avioes.bin", ios::binary);
+void Aviao::salvar(std::ostream& out) const {
+    out.write((char*)&codigo_aviao, sizeof(codigo_aviao));
 
-    arquivo.read((char*)&codigo_aviao, sizeof(codigo_aviao));
+    size_t tamanhoNome = nome_aviao.size();
+    out.write((char*)&tamanhoNome, sizeof(tamanhoNome));
+    out.write(nome_aviao.c_str(), tamanhoNome);
+
+    out.write((char*)&qtd_assentos, sizeof(qtd_assentos));
+}
+
+void Aviao::carregar(std::istream& in) {
+    in.read((char*)&codigo_aviao, sizeof(codigo_aviao));
 
     size_t tamanhoNome;
-    arquivo.read((char*)&tamanhoNome, sizeof(tamanhoNome));
+    in.read((char*)&tamanhoNome, sizeof(tamanhoNome));
 
     char* buffer = new char[tamanhoNome + 1];
-    arquivo.read(buffer, tamanhoNome);
+    in.read(buffer, tamanhoNome);
     buffer[tamanhoNome] = '\0';
     nome_aviao = buffer;
     delete[] buffer;
 
-    arquivo.read((char*)&qtd_assentos, sizeof(qtd_assentos));
-
-    arquivo.close();
+    in.read((char*)&qtd_assentos, sizeof(qtd_assentos));
 }

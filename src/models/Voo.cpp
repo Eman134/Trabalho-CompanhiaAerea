@@ -126,93 +126,86 @@ void Voo::setAssentosDisponiveis(int assentos_disponiveis) {
     this->assentos_disponiveis = assentos_disponiveis;
 }
 
-void Voo::salvar() {
-    ofstream arquivo("./db/voos.bin", ios::binary | ios::app);
-    if (!arquivo.is_open()) {
-        cerr << "Erro ao abrir o arquivo para salvar os voos!" << endl;
-        return;
-    }
+void Voo::salvar(ostream& out) const {
 
-    arquivo.write((char*)&codigo_voo, sizeof(codigo_voo));
-    arquivo.write((char*)&codigo_aviao, sizeof(codigo_aviao));
-    arquivo.write((char*)&codigo_piloto, sizeof(codigo_piloto));
-    arquivo.write((char*)&codigo_copiloto, sizeof(codigo_copiloto));
-    arquivo.write((char*)&codigo_comissario, sizeof(codigo_comissario));
+    out.write((char*)&codigo_voo, sizeof(codigo_voo));
+    out.write((char*)&codigo_aviao, sizeof(codigo_aviao));
+    out.write((char*)&codigo_piloto, sizeof(codigo_piloto));
+    out.write((char*)&codigo_copiloto, sizeof(codigo_copiloto));
+    out.write((char*)&codigo_comissario, sizeof(codigo_comissario));
 
     size_t tamanhoData = data.size();
-    arquivo.write((char*)&tamanhoData, sizeof(tamanhoData));
-    arquivo.write(data.c_str(), tamanhoData);
+    out.write((char*)&tamanhoData, sizeof(tamanhoData));
+    out.write(data.c_str(), tamanhoData);
 
-    arquivo.write((char*)&hora, sizeof(hora));
+    out.write((char*)&hora, sizeof(hora));
 
     size_t tamanhoOrigem = origem.size();
-    arquivo.write((char*)&tamanhoOrigem, sizeof(tamanhoOrigem));
-    arquivo.write(origem.c_str(), tamanhoOrigem);
+    out.write((char*)&tamanhoOrigem, sizeof(tamanhoOrigem));
+    out.write(origem.c_str(), tamanhoOrigem);
 
     size_t tamanhoDestino = destino.size();
-    arquivo.write((char*)&tamanhoDestino, sizeof(tamanhoDestino));
-    arquivo.write(destino.c_str(), tamanhoDestino);
+    out.write((char*)&tamanhoDestino, sizeof(tamanhoDestino));
+    out.write(destino.c_str(), tamanhoDestino);
 
     size_t tamanhoStatus = status.size();
-    arquivo.write((char*)&tamanhoStatus, sizeof(tamanhoStatus));
-    arquivo.write(status.c_str(), tamanhoStatus);
+    out.write((char*)&tamanhoStatus, sizeof(tamanhoStatus));
+    out.write(status.c_str(), tamanhoStatus);
 
-    arquivo.write((char*)&tarifa, sizeof(tarifa));
-    arquivo.write((char*)&assentos_disponiveis, sizeof(assentos_disponiveis));
+    out.write((char*)&tarifa, sizeof(tarifa));
+    out.write((char*)&assentos_disponiveis, sizeof(assentos_disponiveis));
 
-    arquivo.close();
 }
 
-void Voo::carregar()  {
-    ifstream arquivo("./db/voos.bin", ios::binary);
-    if (!arquivo.is_open()) {
-        cerr << "Erro ao abrir o arquivo para carregar os voos!" << endl;
-        return;
-    }
+void Voo::carregar(std::istream& in) {
+    // Leia os dados básicos do voo
+    in.read((char*)&codigo_voo, sizeof(codigo_voo));
+    in.read((char*)&codigo_aviao, sizeof(codigo_aviao));
+    in.read((char*)&codigo_piloto, sizeof(codigo_piloto));
+    in.read((char*)&codigo_copiloto, sizeof(codigo_copiloto));
+    in.read((char*)&codigo_comissario, sizeof(codigo_comissario));
 
-    while (arquivo.read((char*)&codigo_voo, sizeof(codigo_voo))) {
-        arquivo.read((char*)&codigo_aviao, sizeof(codigo_aviao));
-        arquivo.read((char*)&codigo_piloto, sizeof(codigo_piloto));
-        arquivo.read((char*)&codigo_copiloto, sizeof(codigo_copiloto));
-        arquivo.read((char*)&codigo_comissario, sizeof(codigo_comissario));
+    // Leia o tamanho e os dados da string `data`
+    size_t tamanhoData;
+    in.read((char*)&tamanhoData, sizeof(tamanhoData));
+    char* bufferData = new char[tamanhoData + 1];
+    in.read(bufferData, tamanhoData);
+    bufferData[tamanhoData] = '\0';
+    data = bufferData;
+    delete[] bufferData;
 
-        size_t tamanhoData;
-        arquivo.read((char*)&tamanhoData, sizeof(tamanhoData));
-        char* bufferData = new char[tamanhoData + 1];
-        arquivo.read(bufferData, tamanhoData);
-        bufferData[tamanhoData] = '\0';
-        data = bufferData;
-        delete[] bufferData;
+    // Leia o campo `hora`
+    in.read((char*)&hora, sizeof(hora));
 
-        arquivo.read((char*)&hora, sizeof(hora));
+    // Leia o tamanho e os dados da string `origem`
+    size_t tamanhoOrigem;
+    in.read((char*)&tamanhoOrigem, sizeof(tamanhoOrigem));
+    char* bufferOrigem = new char[tamanhoOrigem + 1];
+    in.read(bufferOrigem, tamanhoOrigem);
+    bufferOrigem[tamanhoOrigem] = '\0';
+    origem = bufferOrigem;
+    delete[] bufferOrigem;
 
-        size_t tamanhoOrigem;
-        arquivo.read((char*)&tamanhoOrigem, sizeof(tamanhoOrigem));
-        char* bufferOrigem = new char[tamanhoOrigem + 1];
-        arquivo.read(bufferOrigem, tamanhoOrigem);
-        bufferOrigem[tamanhoOrigem] = '\0';
-        origem = bufferOrigem;
-        delete[] bufferOrigem;
+    // Leia o tamanho e os dados da string `destino`
+    size_t tamanhoDestino;
+    in.read((char*)&tamanhoDestino, sizeof(tamanhoDestino));
+    char* bufferDestino = new char[tamanhoDestino + 1];
+    in.read(bufferDestino, tamanhoDestino);
+    bufferDestino[tamanhoDestino] = '\0';
+    destino = bufferDestino;
+    delete[] bufferDestino;
 
-        size_t tamanhoDestino;
-        arquivo.read((char*)&tamanhoDestino, sizeof(tamanhoDestino));
-        char* bufferDestino = new char[tamanhoDestino + 1];
-        arquivo.read(bufferDestino, tamanhoDestino);
-        bufferDestino[tamanhoDestino] = '\0';
-        destino = bufferDestino;
-        delete[] bufferDestino;
+    // Leia o tamanho e os dados da string `status`
+    size_t tamanhoStatus;
+    in.read((char*)&tamanhoStatus, sizeof(tamanhoStatus));
+    char* bufferStatus = new char[tamanhoStatus + 1];
+    in.read(bufferStatus, tamanhoStatus);
+    bufferStatus[tamanhoStatus] = '\0';
+    status = bufferStatus;
+    delete[] bufferStatus;
 
-        size_t tamanhoStatus;
-        arquivo.read((char*)&tamanhoStatus, sizeof(tamanhoStatus));
-        char* bufferStatus = new char[tamanhoStatus + 1];
-        arquivo.read(bufferStatus, tamanhoStatus);
-        bufferStatus[tamanhoStatus] = '\0';
-        status = bufferStatus;
-        delete[] bufferStatus;
-
-        arquivo.read((char*)&tarifa, sizeof(tarifa));
-        arquivo.read((char*)&assentos_disponiveis, sizeof(assentos_disponiveis));
-    }
-
-    arquivo.close();
+    // Leia os demais dados
+    in.read((char*)&tarifa, sizeof(tarifa));
+    in.read((char*)&assentos_disponiveis, sizeof(assentos_disponiveis));
 }
+

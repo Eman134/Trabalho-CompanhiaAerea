@@ -17,11 +17,13 @@ public:
 
     Aviao* buscarAviao(int codigo_aviao);
 
+    vector<Aviao> getListaAvioes() const;
     void cadastrarAviao();
     void editarAviao(int codigo_aviao);
     void excluirAviao(int codigo_aviao);
     void visualizarAvioes() const;
     
+    int avioesDisponiveis() const;
     int avioesCadastrados() const;
     int getProximoCodigo() const;
 };
