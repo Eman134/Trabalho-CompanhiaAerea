@@ -11,6 +11,7 @@ class Aviao {
         int codigo_aviao;
         string nome_aviao;
         int qtd_assentos;
+        bool disponivel;
 
     public:
         Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos);
@@ -19,13 +20,14 @@ class Aviao {
         int getCodigoAviao() const;
         string getNomeAviao() const;
         int getQtdAssentos() const;
+        bool getDisponivel() const;
 
         void setCodigoAviao(int codigo_aviao);
         void setNomeAviao(const string& nome_aviao);
         void setQtdAssentos(int qtd_assentos);
 
-        void salvar();
-        void carregar();
+        void salvar(ostream& out) const;
+        void carregar(istream& in);
 };
 
 #endif

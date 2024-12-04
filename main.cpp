@@ -5,6 +5,7 @@
 #include "modulos/sistemaTripulacao.h"
 #include <stdlib.h>
 #include <locale>
+#include <limits>
 #ifdef _WIN32
     #include <direct.h>
 #endif
@@ -14,6 +15,12 @@
 #else
     #define LIMPAR_CONSOLE "clear"
 #endif
+
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
 
 using namespace std;
 
@@ -33,19 +40,24 @@ void mostrarMenu() {
     cout << "12 - Fidelidade" << endl;
     cout << "13 - Sair" << endl;
     cout << "============================" << endl;
-    cout << "Digite a opcao desejada: ";
+    cout << YELLOW << "Digite a opcao desejada: " << RESET;
 }
 
 void esperarRetorno() {
     string retorno;
-    cout << "\nCaso deseje voltar ao menu inicial, digite 'R': ";
+    cout << "\n" << GREEN << "Caso deseje voltar ao menu inicial, digite 'R': " << RESET;
     while (true) {
         cin >> retorno;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
         if (retorno == "R" || retorno == "r") {
             system(LIMPAR_CONSOLE);
             break;
-        } else {
-            cout << "Comando invalido! Digite 'R' para voltar: ";
         }
     }
 }
@@ -53,26 +65,24 @@ void esperarRetorno() {
 void criarDiretorioLocal() {
     #ifdef _WIN32
         if (_mkdir("./db") != 0 && errno != EEXIST) {
-            cerr << "Erro ao criar diretório 'db'!" << endl;
+            cerr << RED << "Erro ao criar diretório 'db'!" << RESET << endl;
         }
     #else
         if (mkdir("./db", 0777) != 0 && errno != EEXIST) {
-            cerr << "Erro ao criar diretório 'db'!" << endl;
+            cerr << RED << "Erro ao criar diretório 'db'!" << RESET << endl;
         }
     #endif
 }
 
 int main() {
-
     criarDiretorioLocal();
 
     AviaoController aviaoController;
     VooController vooController;
-
     sistemaTripulacao sistema;
     Passageiro passageiro;
     Passageiro::carregarPassageiros();
-    
+
     int opcao;
     do {
         mostrarMenu();
@@ -80,35 +90,38 @@ int main() {
         system(LIMPAR_CONSOLE);
         switch (opcao) {
             case 1: {
+                cout << GREEN << "Cadastrar avião iniciado..." << RESET << endl;
                 aviaoController.cadastrarAviao();
                 esperarRetorno();
                 break;
             }
             case 2: {
+                cout << GREEN << "Visualizando avioes..." << RESET << endl;
                 aviaoController.visualizarAvioes();
                 esperarRetorno();
                 break;
             }
             case 3: {
+                cout << GREEN << "Cadastro de tripulação iniciado..." << RESET << endl;
                 sistema.cadastrarTripulacao();
                 esperarRetorno();
                 break;
             }
             case 4: {
+                cout << GREEN << "Listando tripulações..." << RESET << endl;
                 sistema.listarTripulacao();
                 esperarRetorno();
                 break;
             }
             case 5: {
+                cout << GREEN << "Cadastro de passageiro iniciado..." << RESET << endl;
                 Passageiro::cadastrarPassageiro();
                 esperarRetorno();
                 break;
             }
             case 6: {
+                cout << YELLOW << "Digite o código ou o nome do passageiro para pesquisa: " << RESET << endl;
                 string codigo;
-
-                cout << "Digite o codigo ou o nome do passageiro para pesquisa: " << endl;
-
                 cin >> codigo;
 
                 bool isNumero = true;
@@ -123,16 +136,16 @@ int main() {
                     int numero = stoi(codigo);
                     Passageiro* passageiro = Passageiro::buscarPassageiro(numero);
                     if (passageiro) {
-                        cout << "Passageiro encontrado: " << passageiro->getNome() << endl;
+                        cout << GREEN << "Passageiro encontrado: " << RESET << passageiro->getNome() << endl;
                     } else {
-                        cout << "Passageiro não encontrado." << endl;
+                        cout << RED << "Passageiro não encontrado." << RESET << endl;
                     }
                 } else {
                     Passageiro* passageiro = Passageiro::buscarPassageiro(codigo);
                     if (passageiro) {
-                        cout << "Passageiro encontrado: " << passageiro->getNome() << endl;
+                        cout << GREEN << "Passageiro encontrado: " << RESET << passageiro->getNome() << endl;
                     } else {
-                        cout << "Passageiro não encontrado." << endl;
+                        cout << RED << "Passageiro não encontrado." << RESET << endl;
                     }
                 }
  
@@ -185,11 +198,11 @@ int main() {
                 break;
             }
             case 13: {
-                cout << "Saindo..." << endl;
+                cout << RED << "Saindo..." << RESET << endl;
                 break;
             }
             default: {
-                cout << "Opção invalida." << endl;
+                cout << RED << "Opcao invalida." << RESET << endl;
                 esperarRetorno();
                 break;
             }

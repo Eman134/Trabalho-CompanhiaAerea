@@ -13,14 +13,18 @@ private:
 
 public:
     VooController();
+    void carregarVoos();
 
     Voo* buscarVoo(int codigo_voo);
     int getNumeroVoos() const;
+
+    vector<Voo> getListaVoos() const;
+
+    void salvarVoos();
     void cadastrarVoo();
     void visualizarVoos() const;
     void editarVoo(int codigo_voo);
     void excluirVoo(int codigo_voo);
-    void carregarVoos();
     int voosCadastrados() const;
     int getProximoCodigo() const;
 };

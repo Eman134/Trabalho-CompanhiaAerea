@@ -1,6 +1,8 @@
 #include "AviaoController.h"
+#include "../models/Aviao.h"
 #include <iostream>
 #include <sys/stat.h>
+#include <fstream>
 
 using namespace std;
 
@@ -18,8 +20,26 @@ void AviaoController::carregarAvioes() {
 
     while (arquivo.peek() != EOF) {
         Aviao aviao;
-        aviao.carregar();
+        aviao.carregar(arquivo);
         lista_avioes.push_back(aviao);
+    }
+
+    arquivo.close();
+}
+
+vector<Aviao> AviaoController::getListaAvioes() const {
+    return lista_avioes;
+}
+
+void AviaoController::salvarAvioes() {
+
+    std::ofstream arquivo("./db/avioes.bin", std::ios::binary | std::ios::trunc);
+    if (!arquivo) {
+        return;
+    }
+
+    for (const Aviao& aviao : lista_avioes) {
+        aviao.salvar(arquivo);
     }
 
     arquivo.close();
@@ -42,9 +62,9 @@ void AviaoController::cadastrarAviao() {
     cin >> qtdAssentos;
     aviao.setQtdAssentos(qtdAssentos);
 
-
-    aviao.salvar();
     lista_avioes.push_back(aviao);
+
+    salvarAvioes();
 
     cout << "Aviao cadastrado com sucesso!" << endl;
 }
@@ -72,6 +92,16 @@ void AviaoController::visualizarAvioes() const {
         cout << "Quantidade de assentos: " << aviao.getQtdAssentos() << endl;
         cout << "----------------------------" << endl;
     }
+}
+
+int AviaoController::avioesDisponiveis() const {
+    int count = 0;
+    for (const Aviao& aviao : lista_avioes) {
+        if (aviao.getDisponivel()) {
+            count++;
+        }
+    }
+    return count;
 }
 
 int AviaoController::avioesCadastrados() const {
