@@ -4,28 +4,20 @@
 #include <string>
 #include "../../modulos/Passageiro.h"
 
-// Classe que representa um assento em um voo
 class Assento {
 private:
-    int numero; 
-    Passageiro* passageiro; 
+    int numero;
+    Passageiro* passageiro;
 
 public:
-    // Construtor que inicializa o número do assento e define passageiro como nullptr
-    Assento(int num) : numero(num), passageiro(nullptr) {}
+    Assento(int num = 0);
 
-    int getNumero() const { return numero; }
+    int getNumero() const;
+    Passageiro* getPassageiro() const;
 
-    Passageiro* getPassageiro() const { return passageiro; }
-
-    // Verifica se o assento está ocupado
-    bool Ocupado() const { return passageiro != nullptr; }
-
-    // Reserva o assento para um passageiro
-    void reservar(Passageiro* p) { passageiro = p; }
-
-    // Libera o assento
-    void liberar() { passageiro = nullptr; }
+    bool Ocupado() const;
+    void reservar(Passageiro* p);
+    void liberar();
 };
 
 #endif
