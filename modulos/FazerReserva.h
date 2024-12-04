@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "voo.h"
+#include "../src/controllers/VooController.h"
 #include "FazerReserva.h"
 #include "Passageiro.h"
 
@@ -13,7 +13,7 @@ using namespace std;
 class Reserva {
 private:
     int codigoReserva;
-    int numerodovoo;
+    int codigo_voo;
     int codigoPassageiro;
     int pontos_fidelidade;
     int assento;
@@ -28,13 +28,13 @@ private:
 
 public:
     Reserva();
-    Reserva(int codigoReserva, int numerodovoo, int codigoPassageiro, int pontos_fidelidade, int assento,
+    Reserva(int codigoReserva, int codigo_voo, int codigoPassageiro, int pontos_fidelidade, int assento,
             string nomePassageiro, string endereco, string telefone, string dataVoo, bool fidelidade, int hora,
             string dataReserva, float tarifa);
 
     // Métodos para acessar os dados privados
     int getCodigoPassageiro();
-    int getcodigoReserva();
+    int getCodigoReserva();
     int getNumeroVoo();
     int getAssento();
     string getNomePassageiro();
@@ -43,10 +43,9 @@ public:
     float getTarifa();
 
     // Método para cadastrar reserva
-    void cadastrarReserva(vector<Reserva>& reservas, vector<Passageiro>& passageiros, vector<Voo>& voos);
+    void cadastrarReserva(VooController* vooController, Passageiro* passageiro);
 
     // Métodos para exibir informações da reserva
-    void exibirDataCadastro();
     void exibirDetalhesReserva();
 };
 

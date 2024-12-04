@@ -1,6 +1,26 @@
 {
   "files.associations": {
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "vector": "cpp",
+    "ostream": "cpp",
+    "xstring": "cpp",
+    "array": "cpp",
+    "deque": "cpp",
+    "initializer_list": "cpp",
+    "list": "cpp",
+    "random": "cpp",
+    "ranges": "cpp",
+    "regex": "cpp",
+    "span": "cpp",
+    "stack": "cpp",
+    "utility": "cpp",
+    "xhash": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp",
+    "format": "cpp",
+    "iosfwd": "cpp",
+    "ios": "cpp",
+    "string": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

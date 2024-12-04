@@ -3,6 +3,7 @@
 #include "src/controllers/VooController.h"
 #include "src/controllers/TripulacaoController.h"
 #include "modulos/Passageiro.h"
+#include "modulos/FazerReserva.h"
 #include <stdlib.h>
 #include <locale>
 #include <limits>
@@ -80,6 +81,7 @@ int main() {
     AviaoController aviaoController;
     VooController vooController;
     TripulacaoController tripulacaoController;
+    Reserva reserva;
     Passageiro passageiro;
     Passageiro::carregarPassageiros();
 
@@ -148,7 +150,7 @@ int main() {
                         cout << RED << "Passageiro não encontrado." << RESET << endl;
                     }
                 }
- 
+
                 esperarRetorno();
                 break;
             }
@@ -185,7 +187,8 @@ int main() {
                 break;
             }
             case 10: {
-                cout << "Fazer reserva (em desenvolvimento)" << endl;
+                cout << GREEN << "Fazer reserva iniciado..." << RESET << endl;
+                reserva.cadastrarReserva(&vooController, &passageiro);
                 esperarRetorno();
                 break;
             }

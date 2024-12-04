@@ -132,7 +132,7 @@ void Passageiro::carregarPassageiros() {
         arquivo.read(&telefone[0], size);
         arquivo.read(reinterpret_cast<char*>(&fidelidade), sizeof(fidelidade));
         arquivo.read(reinterpret_cast<char*>(&pontos_fidelidade), sizeof(pontos_fidelidade));
-        
+
         // Cria um objeto Passageiro e adiciona na lista
         Passageiro passageiro(codigo_passageiro, nome, endereco, telefone, fidelidade, pontos_fidelidade);
         lista_passageiros.push_back(passageiro);
@@ -158,4 +158,8 @@ Passageiro* Passageiro::buscarPassageiro(const string& nome) {
         }
     }
     return nullptr;
+}
+
+vector<Passageiro> Passageiro::getListaPassageiros() const {
+    return lista_passageiros;
 }
