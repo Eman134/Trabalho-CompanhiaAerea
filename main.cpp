@@ -5,6 +5,7 @@
 #include "modulos/sistemaTripulacao.h"
 #include <stdlib.h>
 #include <locale>
+#include <limits>
 #ifdef _WIN32
     #include <direct.h>
 #endif
@@ -41,14 +42,24 @@ void esperarRetorno() {
     cout << "\nCaso deseje voltar ao menu inicial, digite 'R': ";
     while (true) {
         cin >> retorno;
+
+        // Limpa qualquer erro e descarta entradas inválidas
+        if (cin.fail()) {
+            cin.clear();  // Restaura o estado normal de cin
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Descarrega o buffer de entrada
+            cout << "Comando invalido! Digite 'R' para voltar: " << endl;
+            continue;
+        }
+
         if (retorno == "R" || retorno == "r") {
             system(LIMPAR_CONSOLE);
             break;
         } else {
-            cout << "Comando invalido! Digite 'R' para voltar: ";
+            cout << "Comando invalido! Digite 'R' para voltar: " << endl;
         }
     }
 }
+
 
 void criarDiretorioLocal() {
     #ifdef _WIN32
@@ -64,9 +75,11 @@ void criarDiretorioLocal() {
 
 int main() {
 
+
     criarDiretorioLocal();
 
     AviaoController aviaoController;
+
     VooController vooController;
 
     sistemaTripulacao sistema;
@@ -174,7 +187,7 @@ int main() {
                 break;
             }
             default: {
-                cout << "Opção invalida." << endl;
+                cout << "Opcao invalida." << endl;
                 esperarRetorno();
                 break;
             }
