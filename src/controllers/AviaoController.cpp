@@ -46,11 +46,11 @@ void AviaoController::salvarAvioes() {
 }
 
 void AviaoController::cadastrarAviao() {
-    
+
     Aviao aviao;
     int codigo = getProximoCodigo();
     aviao.setCodigoAviao(codigo);
-    
+
     string nome;
     int qtdAssentos;
 
@@ -58,9 +58,10 @@ void AviaoController::cadastrarAviao() {
     cin.ignore();
     getline(cin, nome);
     aviao.setNomeAviao(nome);
-    cout << "Digite a quantidade de assentos: ";
-    cin >> qtdAssentos;
-    aviao.setQtdAssentos(qtdAssentos);
+    //cout << "Digite a quantidade de assentos: ";
+    //cin >> qtdAssentos;
+    //aviao.setQtdAssentos(qtdAssentos);
+    aviao.setQtdAssentos(50);
 
     lista_avioes.push_back(aviao);
 
