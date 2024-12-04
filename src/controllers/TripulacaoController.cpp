@@ -58,7 +58,7 @@ vector<Tripulacao> TripulacaoController::getTripulacoes() const {
 void TripulacaoController::listarTripulacao(){
     // Verificando se existem tripulações cadastradas
     if (tripulacoes.empty()) {
-        cout << "Nenhuma tripulação cadastrada!" << endl;
+        cout << "Nenhuma tripulacao cadastrada!" << endl;
         return;
     }
 

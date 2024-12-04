@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "Voo.h"
+#include "Aviao.h"
 #include "../controllers/AviaoController.h"
 
 using namespace std;
@@ -114,11 +115,11 @@ int Voo::getAssentosDisponiveis() const {
 int Voo::getAssentosTotais() const {
     int qtd_assentos = 0;
     AviaoController aviaoController;
-    Aviao* aviao = aviaoController.buscarAviao(codigo_aviao);
+    Aviao* aviao = aviaoController.buscarAviao(getCodigoAviao());
     if (aviao) {
         qtd_assentos = aviao->getQtdAssentos();
     }
-    return 0;
+    return qtd_assentos;
 }
 
 void Voo::setCodigoVoo(int codigo_voo) {

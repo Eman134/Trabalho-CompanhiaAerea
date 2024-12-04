@@ -90,7 +90,7 @@ int main() {
         system(LIMPAR_CONSOLE);
         switch (opcao) {
             case 1: {
-                cout << GREEN << "Cadastrar avião iniciado..." << RESET << endl;
+                cout << GREEN << "Cadastrar aviao iniciado..." << RESET << endl;
                 aviaoController.cadastrarAviao();
                 esperarRetorno();
                 break;
@@ -102,13 +102,13 @@ int main() {
                 break;
             }
             case 3: {
-                cout << GREEN << "Cadastro de tripulação iniciado..." << RESET << endl;
+                cout << GREEN << "Cadastro de tripulacao iniciado..." << RESET << endl;
                 tripulacaoController.cadastrarTripulacao();
                 esperarRetorno();
                 break;
             }
             case 4: {
-                cout << GREEN << "Listando tripulações..." << RESET << endl;
+                cout << GREEN << "Listando tripulacoes..." << RESET << endl;
                 tripulacaoController.listarTripulacao();
                 esperarRetorno();
                 break;
@@ -120,7 +120,7 @@ int main() {
                 break;
             }
             case 6: {
-                cout << YELLOW << "Digite o código ou o nome do passageiro para pesquisa: " << RESET << endl;
+                cout << YELLOW << "Digite o codigo ou o nome do passageiro para pesquisa: " << RESET << endl;
                 string codigo;
                 cin >> codigo;
 
@@ -153,11 +153,13 @@ int main() {
                 break;
             }
             case 7: {
-                vooController.cadastrarVoo();
+                cout << GREEN << "Cadastrar voo iniciado..." << RESET << endl;
+                vooController.cadastrarVoo(&aviaoController);
                 esperarRetorno();
                 break;
             }
             case 8: {
+                cout << GREEN << "Visualizando voos..." << RESET << endl;
                 vooController.visualizarVoos();
                 esperarRetorno();
                 break;
@@ -167,16 +169,16 @@ int main() {
                     cout << "Nenhum voo cadastrado!" << endl;
                 } else {
                     int codigoVoo;
-                    cout << "Digite o código do voo: ";
+                    cout << "Digite o codigo do voo: ";
                     cin >> codigoVoo;
                     Voo* voo = vooController.buscarVoo(codigoVoo);
                     if (voo) {
                         int numeroAssento;
-                        cout << "Digite o número do assento a ser cadastrado: ";
+                        cout << "Digite o numero do assento a ser cadastrado: ";
                         cin >> numeroAssento;
                         voo->cadastrarAssento(numeroAssento);
                     } else {
-                        cout << "Voo não encontrado!" << endl;
+                        cout << "Voo nao encontrado!" << endl;
                     }
                 }
                 esperarRetorno();

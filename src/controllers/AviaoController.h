@@ -23,6 +23,8 @@ public:
     void editarAviao(int codigo_aviao);
     void excluirAviao(int codigo_aviao);
     void visualizarAvioes() const;
+
+    void setDisponibilidade(int codigo_aviao, bool disponibilidade);
     
     int avioesDisponiveis() const;
     int avioesCadastrados() const;
