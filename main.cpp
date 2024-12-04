@@ -1,8 +1,8 @@
 #include <iostream>
 #include "src/controllers/AviaoController.h"
 #include "src/controllers/VooController.h"
+#include "src/controllers/TripulacaoController.h"
 #include "modulos/Passageiro.h"
-#include "modulos/sistemaTripulacao.h"
 #include <stdlib.h>
 #include <locale>
 #include <limits>
@@ -28,7 +28,7 @@ void mostrarMenu() {
     cout << "====== MENU PRINCIPAL ======" << endl;
     cout << "1 - Cadastrar aviao" << endl;
     cout << "2 - Visualizar avioes" << endl;
-    cout << "3 - Cadastrar tripulacao" << endl;
+    cout << "3 - Cadastrar Tripulacao" << endl;
     cout << "4 - Visualizar tripulacoes" << endl;
     cout << "5 - Cadastrar passageiro" << endl;
     cout << "6 - Pesquisa de passageiro" << endl;
@@ -79,7 +79,7 @@ int main() {
 
     AviaoController aviaoController;
     VooController vooController;
-    sistemaTripulacao sistema;
+    TripulacaoController tripulacaoController;
     Passageiro passageiro;
     Passageiro::carregarPassageiros();
 
@@ -103,13 +103,13 @@ int main() {
             }
             case 3: {
                 cout << GREEN << "Cadastro de tripulação iniciado..." << RESET << endl;
-                sistema.cadastrarTripulacao();
+                tripulacaoController.cadastrarTripulacao();
                 esperarRetorno();
                 break;
             }
             case 4: {
                 cout << GREEN << "Listando tripulações..." << RESET << endl;
-                sistema.listarTripulacao();
+                tripulacaoController.listarTripulacao();
                 esperarRetorno();
                 break;
             }

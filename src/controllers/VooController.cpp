@@ -1,4 +1,6 @@
 #include "VooController.h"
+#include "AviaoController.h"
+#include "TripulacaoController.h"
 #include <iostream>
 #include <sys/stat.h>
 #include <fstream>
@@ -6,7 +8,6 @@
 #ifdef _WIN32
     #include <direct.h>
 #endif
-#include "AviaoController.h"
 
 #define RESET "\033[0m"
 #define RED "\033[31m"
@@ -107,6 +108,8 @@ void VooController::cadastrarVoo() {
     }
 
     cout << GREEN << "Aviao selecionado: " << RESET << aviao.getNomeAviao() << " de codigo " << aviao.getCodigoAviao() << endl;
+
+    voo.setCodigoAviao(aviao.getCodigoAviao());
 
     string origem, destino, data;
     cout << "Digite a origem: ";

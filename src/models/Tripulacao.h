@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-class tripulacao {
+class Tripulacao {
     private:
         int codigoTripulacao;
         string nomeTripulacao;
@@ -13,8 +13,8 @@ class tripulacao {
         bool disponibilidade;
 
     public:
-        tripulacao();
-        tripulacao(int codigo, string nome, string cargo, string telefone, bool disponivel);
+        Tripulacao();
+        Tripulacao(int codigo, string nome, string cargo, string telefone, bool disponivel);
 
         int getCodigoTripulacao() const;
         string getNomeTripulacao() const;

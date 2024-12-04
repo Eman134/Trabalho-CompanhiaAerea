@@ -1,21 +1,23 @@
-#ifndef SISTEMATRIPULACAO_H_INCLUDED
-#define SISTEMATRIPULACAO_H_INCLUDED
+#ifndef TRIPULACAOCONTROLLER_H
+#define TRIPULACAOCONTROLLER_H
 
-#include "Tripulacao.h"
+#include "../models/Tripulacao.h"
 #include <vector>
 
 using namespace std;
 
-class sistemaTripulacao {
+class TripulacaoController {
 private:
-    vector<tripulacao> tripulacoes;  // Usando o nome correto da classe
+    vector<Tripulacao> tripulacoes;  // Usando o nome correto da classe
     int codigoCounter;  // Contador para gerar c�digo �nico para cada tripula��o
     int qtdPiloto;
     int qtdCopiloto;
     int qtdComissario;
 
 public:
-    sistemaTripulacao();  // Inicializa o contador a partir de 1
+    TripulacaoController();  // Inicializa o contador a partir de 1
+
+    vector<Tripulacao> getTripulacoes() const;
 
     int getqtdPiloto() const;
     int getqtdCopiloto() const;

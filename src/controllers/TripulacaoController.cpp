@@ -1,13 +1,13 @@
-#include "SistemaTripulacao.h"
+#include "TripulacaoController.h"
 #include <iostream>
 #include <locale.h>
 #include <cctype>  // Para isdigit()
 #include <algorithm>  // Para all_of()
 using namespace std;
 
-sistemaTripulacao::sistemaTripulacao() : codigoCounter(1), qtdPiloto(0), qtdCopiloto(0), qtdComissario(0) {}
+TripulacaoController::TripulacaoController() : codigoCounter(1), qtdPiloto(0), qtdCopiloto(0), qtdComissario(0) {}
 
-void sistemaTripulacao::cadastrarTripulacao() {
+void TripulacaoController::cadastrarTripulacao() {
     string nome, cargo, telefone;
     bool disponivel = true;  // Inicializando a variável disponivel
     int cargo_teste;
@@ -46,13 +46,16 @@ void sistemaTripulacao::cadastrarTripulacao() {
     }
 
     // Gerar o código automaticamente
-    tripulacao novoTripulante(codigoCounter++, nome, cargo, telefone, disponivel);  // Usando o contador para gerar código
+    Tripulacao novoTripulante(codigoCounter++, nome, cargo, telefone, disponivel);  // Usando o contador para gerar código
     tripulacoes.push_back(novoTripulante);  // Adiciona a tripulação ao vetor
     cout << "Tripulação cadastrada com sucesso!" << endl;
 }
 
+vector<Tripulacao> TripulacaoController::getTripulacoes() const {
+    return tripulacoes;
+}
 
-void sistemaTripulacao::listarTripulacao(){
+void TripulacaoController::listarTripulacao(){
     // Verificando se existem tripulações cadastradas
     if (tripulacoes.empty()) {
         cout << "Nenhuma tripulação cadastrada!" << endl;

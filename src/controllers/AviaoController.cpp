@@ -86,10 +86,12 @@ void AviaoController::visualizarAvioes() const {
     }
 
     cout << "Avioes cadastrados no sistema:" << endl;
+    cout << "----------------------------" << endl;
     for (const Aviao& aviao : lista_avioes) {
         cout << "Codigo do aviao: " << aviao.getCodigoAviao() << endl;
         cout << "Nome do aviao: " << aviao.getNomeAviao() << endl;
         cout << "Quantidade de assentos: " << aviao.getQtdAssentos() << endl;
+        cout << "Disponivel para voo: " << (aviao.getDisponivel() ? "Sim" : "Nao") << endl;
         cout << "----------------------------" << endl;
     }
 }
