@@ -83,8 +83,6 @@ int main() {
     TripulacaoController tripulacaoController;
     Reserva reserva;
     Passageiro passageiro;
-    Passageiro::carregarPassageiros();
-    tripulacaoController.carregarTripulacao();
 
     int opcao;
     do {
@@ -160,7 +158,7 @@ int main() {
             }
             case 7: {
                 cout << GREEN << "Cadastrar voo iniciado..." << RESET << endl;
-                vooController.cadastrarVoo(&aviaoController);
+                vooController.cadastrarVoo(&aviaoController, &tripulacaoController);
                 vooController.salvarVoos();
                 esperarRetorno();
                 break;
@@ -199,12 +197,30 @@ int main() {
                 break;
             }
             case 11: {
-                cout << "Baixa reserva (em desenvolvimento)" << endl;
+                cout << GREEN << "Baixa de reserva iniciado..." << RESET << endl;
+                if (vooController.getNumeroVoos() == 0) {
+                    cout << "Nenhum voo cadastrado!" << endl;
+                } else {
+                    vooController.visualizarVoos();
+                    int codigoVoo;
+                    cout << "Digite o codigo do voo: ";
+                    cin >> codigoVoo;
+                    Voo* voo = vooController.buscarVoo(codigoVoo);
+                    if (voo) {
+                        if (voo->getStatus() == "Realizado") {
+                            cout << "Voo ja realizado!" << endl;
+                        } else {
+                            vooController.darBaixaVoo(codigoVoo);
+                        }
+                    } else {
+                        cout << "Voo nao encontrado!" << endl;
+                    }
+                }
                 esperarRetorno();
                 break;
             }
             case 12: {
-                cout << "Fidelidade (em desenvolvimento)" << endl;
+                cout << GREEN << "Fidelidade iniciado..." << RESET << endl;
                 esperarRetorno();
                 break;
             }

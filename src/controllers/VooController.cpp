@@ -59,7 +59,7 @@ vector<Voo> VooController::getListaVoos() const {
     return lista_voos;
 }
 
-void VooController::cadastrarVoo(AviaoController* aviaoController) {
+void VooController::cadastrarVoo(AviaoController* aviaoController, TripulacaoController* tripulacaoController) {
     Voo voo;
     int codigo_voo = getProximoCodigo();
     voo.setCodigoVoo(codigo_voo);
@@ -145,6 +145,8 @@ void VooController::cadastrarVoo(AviaoController* aviaoController) {
 
     voo.setAssentosDisponiveis(aviao->getQtdAssentos());
 
+    voo.setStatus("Agendado");
+
     lista_voos.push_back(voo);
     salvarVoos();
 
@@ -191,12 +193,15 @@ void VooController::visualizarVoos() const {
             << " | Comissario: " << voo.getCodigoComissario() << endl;
         cout << "Rota: " << CYAN << voo.getOrigem() << RESET
             << " -> " << CYAN << voo.getDestino() << RESET << endl;
-        cout << "Data e Hora: " << voo.getData() << " as " << voo.getHora() << endl;
+        cout << "Data e Hora: " << voo.getData() << " as " << voo.getHora() << "h" << endl;
         cout << "Tarifa: " << GREEN << "R$" << std::fixed << std::setprecision(2)
             << voo.getTarifa() << RESET << endl;
-        cout << "Assentos disponiveis: "
+        if (voo.getStatus() == "Agendado") {
+            cout << "Assentos disponiveis: "
             << (voo.getAssentosDisponiveis() > 0 ? GREEN : RED)
             << voo.getAssentosDisponiveis() << "/" << voo.getAssentosTotais() << RESET << endl;
+        }
+        cout << "Status: " << (voo.getStatus() == "Realizado" ? GREEN : YELLOW) << voo.getStatus() << RESET << endl;
     }
 
     cout << "=======================================================" << endl;
@@ -213,4 +218,15 @@ int VooController::getProximoCodigo() const {
         return 1;
     }
     return lista_voos.back().getCodigoVoo() + 1;
+}
+
+void VooController::darBaixaVoo(int codigo_voo) {
+    Voo* voo = buscarVoo(codigo_voo);
+    if (voo) {
+        voo->setStatus("Realizado");
+        salvarVoos();
+        cout << GREEN << "Voo " << codigo_voo << " realizado com sucesso!" << RESET << endl;
+    } else {
+        cout << RED << "Voo nao encontrado." << RESET << endl;
+    }
 }
