@@ -2,6 +2,7 @@
 #define VOOCONTROLLER_H
 
 #include "../models/Voo.h"
+#include "AviaoController.h"
 #include <vector>
 #include <fstream>
 
@@ -16,11 +17,12 @@ public:
     void carregarVoos();
 
     Voo* buscarVoo(int codigo_voo);
+    int getNumeroVoos() const;
 
     vector<Voo> getListaVoos() const;
 
     void salvarVoos();
-    void cadastrarVoo();
+    void cadastrarVoo(AviaoController* aviaoController);
     void visualizarVoos() const;
     void editarVoo(int codigo_voo);
     void excluirVoo(int codigo_voo);

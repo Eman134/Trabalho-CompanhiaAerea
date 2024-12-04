@@ -1,11 +1,11 @@
 #include "Aviao.h"
 #include <fstream>
 
-Aviao::Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos) {
+Aviao::Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos, bool disponivel) {
     this->codigo_aviao = codigo_aviao;
     this->nome_aviao = nome_aviao;
     this->qtd_assentos = qtd_assentos;
-    this->disponivel = true;
+    this->disponivel = disponivel;
 }
 
 Aviao::Aviao() {
@@ -39,6 +39,10 @@ void Aviao::setQtdAssentos(int qtd_assentos) {
     this->qtd_assentos = qtd_assentos;
 }
 
+void Aviao::setDisponibilidade(bool disponibilidade) {
+    this->disponivel = disponibilidade;
+}
+
 bool Aviao::getDisponivel() const {
     return this->disponivel;
 }
@@ -51,6 +55,8 @@ void Aviao::salvar(std::ostream& out) const {
     out.write(nome_aviao.c_str(), tamanhoNome);
 
     out.write((char*)&qtd_assentos, sizeof(qtd_assentos));
+
+    out.write((char*)&disponivel, sizeof(disponivel));
 }
 
 void Aviao::carregar(std::istream& in) {
@@ -66,4 +72,6 @@ void Aviao::carregar(std::istream& in) {
     delete[] buffer;
 
     in.read((char*)&qtd_assentos, sizeof(qtd_assentos));
+
+    in.read((char*)&disponivel, sizeof(disponivel));
 }

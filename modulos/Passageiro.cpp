@@ -60,11 +60,11 @@ void Passageiro::cadastrarPassageiro() {
     bool fidelidade;
     int pontos_fidelidade;
 
-    cout << "Digite o código do passageiro: ";
+    cout << "Digite o codigo do passageiro: ";
     cin >> codigo_passageiro;
 
     if (verificarDuplicidade(codigo_passageiro)) {
-        cout << "Erro: Passageiro com este código já existe!" << endl;
+        cout << "Erro: Passageiro com este codigo já existe!" << endl;
         return;
     }
 

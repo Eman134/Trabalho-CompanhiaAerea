@@ -14,13 +14,14 @@ class Aviao {
         bool disponivel;
 
     public:
-        Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos);
+        Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos, bool disponivel);
         Aviao();
 
         int getCodigoAviao() const;
         string getNomeAviao() const;
         int getQtdAssentos() const;
         bool getDisponivel() const;
+        void setDisponibilidade(bool disponibilidade);
 
         void setCodigoAviao(int codigo_aviao);
         void setNomeAviao(const string& nome_aviao);

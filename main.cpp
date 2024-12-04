@@ -1,8 +1,8 @@
 #include <iostream>
 #include "src/controllers/AviaoController.h"
 #include "src/controllers/VooController.h"
+#include "src/controllers/TripulacaoController.h"
 #include "modulos/Passageiro.h"
-#include "modulos/sistemaTripulacao.h"
 #include <stdlib.h>
 #include <locale>
 #include <limits>
@@ -28,7 +28,7 @@ void mostrarMenu() {
     cout << "====== MENU PRINCIPAL ======" << endl;
     cout << "1 - Cadastrar aviao" << endl;
     cout << "2 - Visualizar avioes" << endl;
-    cout << "3 - Cadastrar tripulacao" << endl;
+    cout << "3 - Cadastrar Tripulacao" << endl;
     cout << "4 - Visualizar tripulacoes" << endl;
     cout << "5 - Cadastrar passageiro" << endl;
     cout << "6 - Pesquisa de passageiro" << endl;
@@ -79,7 +79,7 @@ int main() {
 
     AviaoController aviaoController;
     VooController vooController;
-    sistemaTripulacao sistema;
+    TripulacaoController tripulacaoController;
     Passageiro passageiro;
     Passageiro::carregarPassageiros();
 
@@ -90,7 +90,7 @@ int main() {
         system(LIMPAR_CONSOLE);
         switch (opcao) {
             case 1: {
-                cout << GREEN << "Cadastrar avião iniciado..." << RESET << endl;
+                cout << GREEN << "Cadastrar aviao iniciado..." << RESET << endl;
                 aviaoController.cadastrarAviao();
                 esperarRetorno();
                 break;
@@ -102,14 +102,14 @@ int main() {
                 break;
             }
             case 3: {
-                cout << GREEN << "Cadastro de tripulação iniciado..." << RESET << endl;
-                sistema.cadastrarTripulacao();
+                cout << GREEN << "Cadastro de tripulacao iniciado..." << RESET << endl;
+                tripulacaoController.cadastrarTripulacao();
                 esperarRetorno();
                 break;
             }
             case 4: {
-                cout << GREEN << "Listando tripulações..." << RESET << endl;
-                sistema.listarTripulacao();
+                cout << GREEN << "Listando tripulacoes..." << RESET << endl;
+                tripulacaoController.listarTripulacao();
                 esperarRetorno();
                 break;
             }
@@ -120,7 +120,7 @@ int main() {
                 break;
             }
             case 6: {
-                cout << YELLOW << "Digite o código ou o nome do passageiro para pesquisa: " << RESET << endl;
+                cout << YELLOW << "Digite o codigo ou o nome do passageiro para pesquisa: " << RESET << endl;
                 string codigo;
                 cin >> codigo;
 
@@ -153,17 +153,34 @@ int main() {
                 break;
             }
             case 7: {
-                vooController.cadastrarVoo();
+                cout << GREEN << "Cadastrar voo iniciado..." << RESET << endl;
+                vooController.cadastrarVoo(&aviaoController);
                 esperarRetorno();
                 break;
             }
             case 8: {
+                cout << GREEN << "Visualizando voos..." << RESET << endl;
                 vooController.visualizarVoos();
                 esperarRetorno();
                 break;
             }
             case 9: {
-                cout << "Cadastrar assento (em desenvolvimento)" << endl;
+               if (vooController.getNumeroVoos() == 0) {
+                    cout << "Nenhum voo cadastrado!" << endl;
+                } else {
+                    int codigoVoo;
+                    cout << "Digite o codigo do voo: ";
+                    cin >> codigoVoo;
+                    Voo* voo = vooController.buscarVoo(codigoVoo);
+                    if (voo) {
+                        int numeroAssento;
+                        cout << "Digite o numero do assento a ser cadastrado: ";
+                        cin >> numeroAssento;
+                        voo->cadastrarAssento(numeroAssento);
+                    } else {
+                        cout << "Voo nao encontrado!" << endl;
+                    }
+                }
                 esperarRetorno();
                 break;
             }

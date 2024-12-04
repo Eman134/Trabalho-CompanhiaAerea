@@ -85,13 +85,23 @@ void AviaoController::visualizarAvioes() const {
         return;
     }
 
-    cout << "Avioes cadastrados no sistema:" << endl;
     for (const Aviao& aviao : lista_avioes) {
         cout << "Codigo do aviao: " << aviao.getCodigoAviao() << endl;
         cout << "Nome do aviao: " << aviao.getNomeAviao() << endl;
         cout << "Quantidade de assentos: " << aviao.getQtdAssentos() << endl;
+        cout << "Disponivel para voo: " << (aviao.getDisponivel() ? "\033[32mSim\033[0m" : "\033[31mNao\033[0m") << endl;
         cout << "----------------------------" << endl;
     }
+}
+
+void AviaoController::setDisponibilidade(int codigo_aviao, bool disponibilidade) {
+    for (Aviao& aviao : lista_avioes) {
+        if (aviao.getCodigoAviao() == codigo_aviao) {
+            aviao.setDisponibilidade(disponibilidade);
+            break;
+        }
+    }
+    salvarAvioes();
 }
 
 int AviaoController::avioesDisponiveis() const {

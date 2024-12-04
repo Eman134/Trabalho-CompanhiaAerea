@@ -23,8 +23,11 @@ class Voo {
         string status;
         float tarifa;
         int assentos_disponiveis;
+        vector<Assento> assentos;
+        int numAssentos;
     public:
         Voo();
+        Voo(int numAssentos);
         int getCodigoVoo() const;
         int getCodigoAviao() const;
         int getCodigoPiloto() const;
@@ -38,6 +41,10 @@ class Voo {
         float getTarifa() const;
         int getAssentosDisponiveis() const;
         int getAssentosTotais() const;
+        Assento* getAssento(int numero);
+        bool reservarAssento(int numero, Passageiro* passageiro);
+        void liberarAssento(int numero);
+        void cadastrarAssento(int numero); // Adicionando a função de cadastrar assento
 
         void setCodigoVoo(int codigo_voo);
         void setCodigoAviao(int codigo_aviao);
