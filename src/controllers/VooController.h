@@ -19,6 +19,7 @@ public:
 
     vector<Voo> getListaVoos() const;
 
+    void salvarVoos();
     void cadastrarVoo();
     void visualizarVoos() const;
     void editarVoo(int codigo_voo);

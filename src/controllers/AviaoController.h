@@ -14,6 +14,7 @@ private:
 public:
     AviaoController();
     void carregarAvioes();
+    void salvarAvioes();
 
     Aviao* buscarAviao(int codigo_aviao);
 

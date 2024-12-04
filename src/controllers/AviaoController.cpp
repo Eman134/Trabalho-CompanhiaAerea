@@ -15,7 +15,6 @@ void AviaoController::carregarAvioes() {
 
     ifstream arquivo("./db/avioes.bin", ios::binary);
     if (!arquivo) {
-        cout << "Erro ao abrir o arquivo de avioes!" << endl;
         return;
     }
 
@@ -30,6 +29,20 @@ void AviaoController::carregarAvioes() {
 
 vector<Aviao> AviaoController::getListaAvioes() const {
     return lista_avioes;
+}
+
+void AviaoController::salvarAvioes() {
+
+    std::ofstream arquivo("./db/avioes.bin", std::ios::binary | std::ios::trunc);
+    if (!arquivo) {
+        return;
+    }
+
+    for (const Aviao& aviao : lista_avioes) {
+        aviao.salvar(arquivo);
+    }
+
+    arquivo.close();
 }
 
 void AviaoController::cadastrarAviao() {
@@ -49,14 +62,9 @@ void AviaoController::cadastrarAviao() {
     cin >> qtdAssentos;
     aviao.setQtdAssentos(qtdAssentos);
 
-    ofstream arquivo("./db/avioes.bin", ios::binary | ios::trunc);
-    if (!arquivo) {
-        return;
-    }
-
-    aviao.salvar(arquivo);
-
     lista_avioes.push_back(aviao);
+
+    salvarAvioes();
 
     cout << "Aviao cadastrado com sucesso!" << endl;
 }
