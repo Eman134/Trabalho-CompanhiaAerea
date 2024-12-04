@@ -128,6 +128,12 @@ void Reserva::cadastrarReserva(VooController* vooController, Passageiro* passage
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << RED << "Numero de assento invalido. Digite um numero valido: " << RESET;
         } else {
+
+            if (numeroAssento < 1 || numeroAssento > voo->getAssentosTotais()) {
+                cout << RED << "Assento invalido. Digite um assento valido: " << RESET << endl;
+                continue;
+            }
+
             if (voo->reservarAssento(numeroAssento, passageiro)) {
                 break;
             }
