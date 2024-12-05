@@ -165,5 +165,14 @@ Passageiro* Passageiro::buscarPassageiro(const string& nome) {
 }
 
 vector<Passageiro> Passageiro::getListaPassageiros() const {
-    return lista_passageiros;
+    vector<Passageiro> lista_passageiros_temp = lista_passageiros;
+    for (int i = 0; i < lista_passageiros_temp.size(); i++) {
+        for (int j = i + 1; j < lista_passageiros_temp.size(); j++) {
+            if (lista_passageiros_temp[i].getCodigoPassageiro() == lista_passageiros_temp[j].getCodigoPassageiro()) {
+                lista_passageiros_temp.erase(lista_passageiros_temp.begin() + j);
+                j--;
+            }
+        }
+    }
+    return lista_passageiros_temp;
 }

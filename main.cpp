@@ -142,7 +142,7 @@ int main() {
                     if (passageiro) {
                         cout << GREEN << "Passageiro encontrado: " << RESET << passageiro->getNome() << endl;
                         cout << "Nome: " << passageiro->getNome() << endl;
-                        cout << "Código: " << passageiro->getCodigoPassageiro() << endl;
+                        cout << "Codigo: " << passageiro->getCodigoPassageiro() << endl;
                         cout << "Telefone: " << passageiro->getTelefone() << endl;
                     } else {
                         cout << RED << "Passageiro não encontrado." << RESET << endl;
@@ -152,7 +152,7 @@ int main() {
                     if (passageiro) {
                         cout << GREEN << "Passageiro encontrado: " << RESET << passageiro->getNome() << endl;
                         cout << "Nome: " << passageiro->getNome() << endl;
-                        cout << "Código: " << passageiro->getCodigoPassageiro() << endl;
+                        cout << "Codigo: " << passageiro->getCodigoPassageiro() << endl;
                         cout << "Telefone: " << passageiro->getTelefone() << endl;
                     } else {
                         cout << RED << "Passageiro não encontrado." << RESET << endl;

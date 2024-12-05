@@ -202,7 +202,7 @@ void VooController::visualizarVoos() const {
             << voo.getAssentosDisponiveis() << "/" << voo.getAssentosTotais() << RESET << endl;
         }
         cout << "Status: " << (voo.getStatus() == "Realizado" ? GREEN : YELLOW) << voo.getStatus() << RESET << endl;
-    }
+        }
 
     cout << "=======================================================" << endl;
 
@@ -228,5 +228,16 @@ void VooController::darBaixaVoo(int codigo_voo) {
         cout << GREEN << "Voo " << codigo_voo << " realizado com sucesso!" << RESET << endl;
     } else {
         cout << RED << "Voo nao encontrado." << RESET << endl;
+    }
+}
+
+void VooController::reservarAssento(int codigo_voo, int numero_assento, Passageiro* passageiro) {
+    Voo* voo = buscarVoo(codigo_voo);
+    if (voo) {
+        if (voo->reservarAssento(numero_assento, passageiro)) {
+            salvarVoos();
+        } else {
+            cout << RED << "Assento ocupado ou invalido. Digite um numero valido: " << RESET << endl;
+        }
     }
 }

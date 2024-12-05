@@ -148,6 +148,7 @@ bool Voo::reservarAssento(int numero, Passageiro* passageiro) {
         assento->reservar(passageiro);
         setAssentosDisponiveis(getAssentosDisponiveis() - 1);
         assentos.push_back(*assento);
+        printf("Assento %d reservado com sucesso.\n", numero);
         return true;
     }
     return false;
