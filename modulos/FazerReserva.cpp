@@ -85,8 +85,9 @@ void Reserva::cadastrarReserva(VooController* vooController, Passageiro* passage
                     continue;
                 }
                 break;
+            } else {
+                cout << RED << "Voo nao encontrado. Digite um codigo valido: " << RESET << endl;
             }
-            cout << RED << "Voo nao encontrado. Digite um codigo valido: " << RESET << endl;
         }
     }
 
