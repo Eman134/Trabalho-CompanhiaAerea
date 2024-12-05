@@ -53,7 +53,7 @@ Após a execução do programa, o sistema irá exibir um menu com várias opçõ
 4. **Visualizar tripulações** – Exibir a lista de tripulações cadastradas.
 5. **Cadastrar passageiro** – Registrar os passageiros que vão realizar viagens.
 6. **Cadastrar voo** – Registrar novos voos no sistema.
-7. **Cadastrar assento** – Definir os assentos disponíveis em cada voo.
+7. **Visualizar voos** – Registrar novos voos no sistema.
 8. **Fazer reserva** – Permitir ao passageiro reservar um assento em um voo.
 9. **Baixa reserva** – Cancelar a reserva feita anteriormente.
 10. **Pesquisa** – Realizar pesquisas de voos, passageiros ou outros itens.
@@ -87,7 +87,7 @@ Menu principal do sistema:
 5 - Cadastrar passageiro
 6 - Pesquisar passageiros
 7 - Cadastrar voo
-8 - Cadastrar assento
+8 - Visualizar voos
 9 - Fazer reserva
 10 - Baixa reserva
 11 - Fidelidade

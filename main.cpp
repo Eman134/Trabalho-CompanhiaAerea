@@ -35,11 +35,10 @@ void mostrarMenu() {
     cout << "6 - Pesquisa de passageiro" << endl;
     cout << "7 - Cadastrar voo" << endl;
     cout << "8 - Visualizar voos" << endl;
-    cout << "9 - Cadastrar assento" << endl;
-    cout << "10 - Fazer reserva" << endl;
-    cout << "11 - Baixa reserva" << endl;
-    cout << "12 - Fidelidade" << endl;
-    cout << "13 - Sair" << endl;
+    cout << "9 - Fazer reserva" << endl;
+    cout << "10 - Baixa reserva" << endl;
+    cout << "11 - Fidelidade" << endl;
+    cout << "12 - Sair" << endl;
     cout << "============================" << endl;
     cout << YELLOW << "Digite a opcao desejada: " << RESET;
 }
@@ -176,33 +175,12 @@ int main() {
                 break;
             }
             case 9: {
-               if (vooController.getNumeroVoos() == 0) {
-                    cout << "Nenhum voo cadastrado!" << endl;
-                } else {
-                    int codigoVoo;
-                    cout << "Digite o codigo do voo: ";
-                    cin >> codigoVoo;
-                    Voo* voo = vooController.buscarVoo(codigoVoo);
-                    if (voo) {
-                        int numeroAssento;
-                        cout << "Digite o numero do assento a ser cadastrado: ";
-                        cin >> numeroAssento;
-                        voo->cadastrarAssento(numeroAssento);
-                        vooController.salvarVoos();
-                    } else {
-                        cout << "Voo nao encontrado!" << endl;
-                    }
-                }
-                esperarRetorno();
-                break;
-            }
-            case 10: {
                 cout << GREEN << "Fazer reserva iniciado..." << RESET << endl;
                 reserva.cadastrarReserva(&vooController, &passageiro);
                 esperarRetorno();
                 break;
             }
-            case 11: {
+            case 10: {
                 cout << GREEN << "Baixa de reserva iniciado..." << RESET << endl;
                 if (vooController.getNumeroVoos() == 0) {
                     cout << "Nenhum voo cadastrado!" << endl;
@@ -225,7 +203,7 @@ int main() {
                 esperarRetorno();
                 break;
             }
-            case 12: {
+            case 11: {
                 cout << GREEN << "Fidelidade iniciado..." << RESET << endl;
                 for (const auto& passageiro : passageiro.getListaPassageiros()) {
                     cout << "Passageiro: " << passageiro.getNome() << " - Pontos de fidelidade: " << passageiro.getPontosFidelidade() << endl;
@@ -233,7 +211,7 @@ int main() {
                 esperarRetorno();
                 break;
             }
-            case 13: {
+            case 12: {
                 cout << RED << "Saindo..." << RESET << endl;
                 break;
             }
@@ -243,7 +221,7 @@ int main() {
                 break;
             }
         }
-    } while (opcao != 13);
+    } while (opcao != 12);
 
     return 0;
 }
