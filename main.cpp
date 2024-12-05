@@ -227,6 +227,9 @@ int main() {
             }
             case 12: {
                 cout << GREEN << "Fidelidade iniciado..." << RESET << endl;
+                for (const auto& passageiro : passageiro.getListaPassageiros()) {
+                    cout << "Passageiro: " << passageiro.getNome() << " - Pontos de fidelidade: " << passageiro.getPontosFidelidade() << endl;
+                }
                 esperarRetorno();
                 break;
             }

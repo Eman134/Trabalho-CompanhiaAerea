@@ -15,7 +15,7 @@ Passageiro* Assento::getPassageiro() const {
 
 // Verifica se o assento está ocupado (se existe um passageiro associado)
 bool Assento::Ocupado() const {
-    return passageiro != nullptr;
+    return true;
 }
 
 // Reserva o assento para um passageiro

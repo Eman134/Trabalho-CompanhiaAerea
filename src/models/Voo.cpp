@@ -271,7 +271,7 @@ void Voo::salvar(ostream& out) const {
     for (const Assento& assento : assentos) {
         int numero = assento.getNumero();
         Passageiro* passageiro = assento.getPassageiro();
-        bool ocupado = assento.Ocupado();
+        bool ocupado = true;
         out.write((char*)&numero, sizeof(numero));
         out.write((char*)&ocupado, sizeof(ocupado));
         if (ocupado) {
@@ -353,4 +353,5 @@ void Voo::carregar(std::istream& in) {
         }
         assentos.push_back(assento);
     }
+
 }
