@@ -118,14 +118,17 @@ void VooController::cadastrarVoo(AviaoController* aviaoController, TripulacaoCon
 
     string origem, destino, data;
     cout << "Digite a origem: ";
+    cin.ignore();
     getline(cin, origem);
     voo.setOrigem(origem);
 
     cout << "Digite o destino: ";
+    cin.ignore();
     getline(cin, destino);
     voo.setDestino(destino);
 
     cout << "Digite a data (dd/mm/aaaa): ";
+    cin.ignore();
     getline(cin, data);
     voo.setData(data);
 
