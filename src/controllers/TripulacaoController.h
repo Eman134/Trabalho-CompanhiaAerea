@@ -8,12 +8,15 @@ using namespace std;
 
 class TripulacaoController {
 private:
-    vector<Tripulacao> tripulacoes;  // Usando o nome correto da classe
-    int codigoCounter;  // Contador para gerar c�digo �nico para cada tripula��o
+    vector<Tripulacao> tripulacoes;
+    int codigoCounter;
 
 public:
-    TripulacaoController();  // Inicializa o contador a partir de 1
 
+    // Construtor padrão que inicializa a lista de tripulacoes
+    TripulacaoController();
+
+    // Métodos para manipulação da lista de tripulacoes
     vector<Tripulacao> getTripulacoes() const;
 
     int getQtdPiloto() const;

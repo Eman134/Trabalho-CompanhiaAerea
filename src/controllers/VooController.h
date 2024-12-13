@@ -15,7 +15,12 @@ private:
     vector<Voo> lista_voos;
 
 public:
+
+    // Construtor padrão que inicializa a lista de voos
     VooController();
+
+    // Métodos para manipulação da lista de voos
+
     void carregarVoos();
 
     Voo* buscarVoo(int codigo_voo);

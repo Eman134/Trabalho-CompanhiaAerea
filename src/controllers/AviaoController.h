@@ -12,10 +12,12 @@ private:
     vector<Aviao> lista_avioes;
 
 public:
+    // Construtor padrão que inicializa a lista de avioes'
     AviaoController();
     void carregarAvioes();
     void salvarAvioes();
 
+    // Métodos para manipulação da lista de avioes
     Aviao* buscarAviao(int codigo_aviao);
 
     vector<Aviao> getListaAvioes() const;
