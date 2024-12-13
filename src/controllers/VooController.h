@@ -2,6 +2,7 @@
 #define VOOCONTROLLER_H
 
 #include "../models/Voo.h"
+#include "../models/Passageiro.h"
 #include "AviaoController.h"
 #include "TripulacaoController.h"
 #include <vector>

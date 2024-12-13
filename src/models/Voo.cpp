@@ -4,9 +4,10 @@
 #include "Voo.h"
 #include "Aviao.h"
 #include "Assento.h"
+#include "Passageiro.h"
 #include <algorithm>
 #include "../controllers/AviaoController.h"
-#include "../../modulos/Passageiro.h"
+#include "../controllers/PassageiroController.h"
 
 #define RESET "\033[0m"
 #define RED "\033[31m"
@@ -337,18 +338,18 @@ void Voo::carregar(std::istream& in) {
     int numAssentos;
     in.read((char*)&numAssentos, sizeof(numAssentos));
     assentos.clear();
+    PassageiroController* passageiroController = new PassageiroController();
 
     for (int i = 0; i < numAssentos; ++i) {
         int numero;
         bool ocupado;
         in.read((char*)&numero, sizeof(numero));
         in.read((char*)&ocupado, sizeof(ocupado));
-        Passageiro* passageiro = nullptr;
         Assento assento(numero);
         if (ocupado) {
             int codigoPassageiro;
             in.read((char*)&codigoPassageiro, sizeof(codigoPassageiro));
-            passageiro = Passageiro::buscarPassageiro(codigoPassageiro);
+            Passageiro* passageiro = passageiroController->buscarPassageiro(codigoPassageiro);
             assento.reservar(passageiro);
         }
         assentos.push_back(assento);

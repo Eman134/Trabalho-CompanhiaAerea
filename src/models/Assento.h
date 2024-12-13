@@ -2,7 +2,7 @@
 #define ASSENTO_H
 
 #include <string>
-#include "../../modulos/Passageiro.h"
+#include "Passageiro.h"
 
 class Assento {
 private:

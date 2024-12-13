@@ -5,8 +5,9 @@
 #include <string>
 #include <vector>
 #include "../src/controllers/VooController.h"
+#include "../src/controllers/PassageiroController.h"
+#include "../src/models/Passageiro.h"
 #include "FazerReserva.h"
-#include "Passageiro.h"
 
 using namespace std;
 
@@ -43,7 +44,7 @@ public:
     float getTarifa();
 
     // Método para cadastrar reserva
-    void cadastrarReserva(VooController* vooController, Passageiro* passageiro);
+    void cadastrarReserva(VooController* vooController, PassageiroController* passageiroController);
 
     // Métodos para exibir informações da reserva
     void exibirDetalhesReserva();

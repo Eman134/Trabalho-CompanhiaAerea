@@ -1,9 +1,10 @@
 #include "FazerReserva.h"
 #include <iostream>
 #include <vector>
-#include "Passageiro.h"
 #include "../src/models/Voo.h"
+#include "../src/models/Passageiro.h"
 #include "../src/controllers/VooController.h"
+#include "../src/controllers/PassageiroController.h"
 #include <fstream>
 #include <limits>
 
@@ -14,7 +15,7 @@
 #define BLUE "\033[34m"
 
 using namespace std;
-
+ 
 Reserva::Reserva() {
     this->codigoReserva = codigoReserva;
     this->codigo_voo = codigo_voo;
@@ -49,7 +50,7 @@ string Reserva::getNomePassageiro() {
 }
 
 // Método para cadastrar reserva
-void Reserva::cadastrarReserva(VooController* vooController, Passageiro* passageiroController) {
+void Reserva::cadastrarReserva(VooController* vooController, PassageiroController* passageiroController) {
     int codigo_voo;
     int codigo_passageiro;
     Voo* voo;
@@ -82,7 +83,7 @@ void Reserva::cadastrarReserva(VooController* vooController, Passageiro* passage
             if (voo) {
                 if (voo->getAssentosDisponiveis() == 0) {
                     cout << RED << "Voo lotado. Escolha outro voo: " << RESET << endl;
-                    continue;
+                    return;
                 }
                 break;
             } else {
@@ -127,12 +128,19 @@ void Reserva::cadastrarReserva(VooController* vooController, Passageiro* passage
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << RED << "Numero de assento invalido. Digite um numero valido: " << RESET;
+            return;
         } else {
 
             if (numeroAssento < 1 || numeroAssento > voo->getAssentosTotais()) {
                 cout << RED << "Assento invalido. Digite um assento valido: " << RESET << endl;
-                continue;
+                return;
             }
+
+            if (voo->getAssento(numeroAssento) != nullptr && voo->getAssento(numeroAssento)->Ocupado()) {
+                cout << RED << "Assento ocupado. Digite um assento valido: " << RESET << endl;
+                return;
+            }
+
             vooController->reservarAssento(codigo_voo, numeroAssento, passageiro);
             break;
         }

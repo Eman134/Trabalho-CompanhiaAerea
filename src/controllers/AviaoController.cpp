@@ -61,6 +61,7 @@ void AviaoController::cadastrarAviao() {
     //cout << "Digite a quantidade de assentos: ";
     //cin >> qtdAssentos;
     //aviao.setQtdAssentos(qtdAssentos);
+    // Modificado para 50 assentos como padrão
     aviao.setQtdAssentos(50);
 
     lista_avioes.push_back(aviao);

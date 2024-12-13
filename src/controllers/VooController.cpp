@@ -107,8 +107,10 @@ void VooController::cadastrarVoo(AviaoController* aviaoController, TripulacaoCon
             break;
         } else if (aviao && !aviao->getDisponivel()) {
             cout << RED << "Aviao indisponivel. Digite um codigo valido: " << RESET << endl;
+            return;
         } else {
             cout << RED << "Aviao nao encontrado. Digite um codigo valido: " << RESET << endl;
+            return;
         }
 
     }
@@ -239,8 +241,6 @@ void VooController::reservarAssento(int codigo_voo, int numero_assento, Passagei
     if (voo) {
         if (voo->reservarAssento(numero_assento, passageiro)) {
             salvarVoos();
-        } else {
-            cout << RED << "Assento ocupado ou invalido. Digite um numero valido: " << RESET << endl;
         }
     }
 }

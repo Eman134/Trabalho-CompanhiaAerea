@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "Assento.h"
-#include "../../modulos/Passageiro.h"
+#include "Passageiro.h"
 
 using namespace std;
 
