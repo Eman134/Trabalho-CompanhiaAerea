@@ -1,51 +1,24 @@
-#include "Passageiro.h"
+#include "PassageiroController.h"
+#include "../models/Passageiro.h"
 #include <iostream>
 #include <vector>
 #include <fstream>
 
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+
 using namespace std;
 
-vector<Passageiro> lista_passageiros;
-
-// Construtor que inicializa um passageiro com os dados fornecidos
-Passageiro::Passageiro(int codigo_passageiro, string nome, string endereco, string telefone, bool fidelidade, int pontos_fidelidade) {
-    this->codigo_passageiro = codigo_passageiro;
-    this->nome = nome;
-    this->endereco = endereco;
-    this->telefone = telefone;
-    this->fidelidade = fidelidade;
-    this->pontos_fidelidade = pontos_fidelidade;
+// Construtor padrão que inicializa a lista de passageiros
+PassageiroController::PassageiroController() {
     carregarPassageiros();
 }
 
-// Construtor padrão que inicializa um passageiro com valores padrão
-Passageiro::Passageiro() {
-    this->codigo_passageiro = 0;
-    this->nome = "";
-    this->endereco = "";
-    this->telefone = "";
-    this->fidelidade = false;
-    this->pontos_fidelidade = 0;
-    carregarPassageiros();
-}
-
-// Métodos getter para acessar os atributos privados de um passageiro
-int Passageiro::getCodigoPassageiro() const { return this->codigo_passageiro; }
-string Passageiro::getNome() const { return this->nome; }
-string Passageiro::getEndereco() const { return this->endereco; }
-string Passageiro::getTelefone() const { return this->telefone; }
-bool Passageiro::isFidelidade() const { return this->fidelidade; }
-int Passageiro::getPontosFidelidade() const { return this->pontos_fidelidade; }
-
-// Métodos setter para modificar os atributos privados de um passageiro
-void Passageiro::setCodigoPassageiro(int codigo_passageiro) { this->codigo_passageiro = codigo_passageiro; }
-void Passageiro::setNome(string nome) { this->nome = nome; }
-void Passageiro::setEndereco(string endereco) { this->endereco = endereco; }
-void Passageiro::setTelefone(string telefone) { this->telefone = telefone; }
-void Passageiro::setFidelidade(bool fidelidade) { this->fidelidade = fidelidade; }
-void Passageiro::setPontosFidelidade(int pontos_fidelidade) { this->pontos_fidelidade = pontos_fidelidade; }
-
-bool Passageiro::verificarDuplicidade(int codigo_passageiro) {
+// Função para verificar se já existe um passageiro com o mesmo código
+bool PassageiroController::verificarDuplicidade(int codigo_passageiro) {
     for (const auto& passageiro : lista_passageiros) {
         if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
             return true;
@@ -54,7 +27,8 @@ bool Passageiro::verificarDuplicidade(int codigo_passageiro) {
     return false;
 }
 
-void Passageiro::cadastrarPassageiro() {
+// Função para cadastrar um novo passageiro
+void PassageiroController::cadastrarPassageiro() {
     int codigo_passageiro;
     string nome;
     string endereco;
@@ -89,27 +63,34 @@ void Passageiro::cadastrarPassageiro() {
 }
 
 // Função para salvar a lista de passageiros em um arquivo binário
-void Passageiro::salvarPassageiros() {
+void PassageiroController::salvarPassageiros() {
     ofstream arquivo("./db/passageiros.bin", ios::binary);
     for (const auto& passageiro : lista_passageiros) {
-        arquivo.write(reinterpret_cast<const char*>(&passageiro.codigo_passageiro), sizeof(passageiro.codigo_passageiro));
-        size_t size = passageiro.nome.size();
+        int codigo_passageiro = passageiro.getCodigoPassageiro();
+        string nome = passageiro.getNome();
+        string endereco = passageiro.getEndereco();
+        string telefone = passageiro.getTelefone();
+        bool fidelidade = passageiro.isFidelidade();
+        int pontos_fidelidade = passageiro.getPontosFidelidade();
+
+        arquivo.write(reinterpret_cast<const char*>(&codigo_passageiro), sizeof(codigo_passageiro));
+        size_t size = nome.size();
         arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
-        arquivo.write(passageiro.nome.c_str(), size);
-        size = passageiro.endereco.size();
+        arquivo.write(nome.c_str(), size);
+        size = endereco.size();
         arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
-        arquivo.write(passageiro.endereco.c_str(), size);
-        size = passageiro.telefone.size();
+        arquivo.write(endereco.c_str(), size);
+        size = telefone.size();
         arquivo.write(reinterpret_cast<const char*>(&size), sizeof(size));
-        arquivo.write(passageiro.telefone.c_str(), size);
-        arquivo.write(reinterpret_cast<const char*>(&passageiro.fidelidade), sizeof(passageiro.fidelidade));
-        arquivo.write(reinterpret_cast<const char*>(&passageiro.pontos_fidelidade), sizeof(passageiro.pontos_fidelidade));
+        arquivo.write(telefone.c_str(), size);
+        arquivo.write(reinterpret_cast<const char*>(&fidelidade), sizeof(fidelidade));
+        arquivo.write(reinterpret_cast<const char*>(&pontos_fidelidade), sizeof(pontos_fidelidade));
     }
     arquivo.close();
 }
 
 // Função para carregar a lista de passageiros de um arquivo binário
-void Passageiro::carregarPassageiros() {
+void PassageiroController::carregarPassageiros() {
     ifstream arquivo("./db/passageiros.bin", ios::binary);
     if (!arquivo.is_open()) return;
 
@@ -145,7 +126,7 @@ void Passageiro::carregarPassageiros() {
 }
 
 // Função para buscar um passageiro pelo código
-Passageiro* Passageiro::buscarPassageiro(int codigo_passageiro) {
+Passageiro* PassageiroController::buscarPassageiro(int codigo_passageiro) {
     for (auto& passageiro : lista_passageiros) {
         if (passageiro.getCodigoPassageiro() == codigo_passageiro) {
             return &passageiro;
@@ -155,7 +136,7 @@ Passageiro* Passageiro::buscarPassageiro(int codigo_passageiro) {
 }
 
 // Função para buscar um passageiro pelo nome
-Passageiro* Passageiro::buscarPassageiro(const string& nome) {
+Passageiro* PassageiroController::buscarPassageiro(const string& nome) {
     for (auto& passageiro : lista_passageiros) {
         if (passageiro.getNome() == nome) {
             return &passageiro;
@@ -164,7 +145,8 @@ Passageiro* Passageiro::buscarPassageiro(const string& nome) {
     return nullptr;
 }
 
-vector<Passageiro> Passageiro::getListaPassageiros() const {
+// Função para obter a lista de passageiros
+vector<Passageiro> PassageiroController::getListaPassageiros() const {
     vector<Passageiro> lista_passageiros_temp = lista_passageiros;
     for (int i = 0; i < lista_passageiros_temp.size(); i++) {
         for (int j = i + 1; j < lista_passageiros_temp.size(); j++) {
@@ -175,4 +157,42 @@ vector<Passageiro> Passageiro::getListaPassageiros() const {
         }
     }
     return lista_passageiros_temp;
+}
+
+// Função para pesquisar um passageiro
+void PassageiroController::pesquisarPassageiro() {
+    cout << YELLOW << "Digite o codigo ou o nome do passageiro para pesquisa: " << RESET << endl;
+    string codigo;
+    cin >> codigo;
+
+    bool isNumero = true;
+    for (char c : codigo) {
+        if (!isdigit(c)) {
+            isNumero = false;
+            break;
+        }
+    }
+
+    if (isNumero) {
+        int numero = stoi(codigo);
+        Passageiro* passageiro = buscarPassageiro(numero);
+        if (passageiro) {
+            cout << GREEN << "Passageiro encontrado: " << RESET << passageiro->getNome() << endl;
+            cout << "Nome: " << passageiro->getNome() << endl;
+            cout << "Codigo: " << passageiro->getCodigoPassageiro() << endl;
+            cout << "Telefone: " << passageiro->getTelefone() << endl;
+        } else {
+            cout << RED << "Passageiro não encontrado." << RESET << endl;
+        }
+    } else {
+        Passageiro* passageiro = buscarPassageiro(codigo);
+        if (passageiro) {
+            cout << GREEN << "Passageiro encontrado: " << RESET << passageiro->getNome() << endl;
+            cout << "Nome: " << passageiro->getNome() << endl;
+            cout << "Codigo: " << passageiro->getCodigoPassageiro() << endl;
+            cout << "Telefone: " << passageiro->getTelefone() << endl;
+        } else {
+            cout << RED << "Passageiro não encontrado." << RESET << endl;
+        }
+    }
 }

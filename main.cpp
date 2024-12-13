@@ -2,7 +2,8 @@
 #include "src/controllers/AviaoController.h"
 #include "src/controllers/VooController.h"
 #include "src/controllers/TripulacaoController.h"
-#include "modulos/Passageiro.h"
+#include "src/controllers/PassageiroController.h"
+#include "src/models/Passageiro.h"
 #include "modulos/FazerReserva.h"
 #include <stdlib.h>
 #include <locale>
@@ -80,8 +81,8 @@ int main() {
     AviaoController aviaoController;
     VooController vooController;
     TripulacaoController tripulacaoController;
+    PassageiroController passageiroController;
     Reserva reserva;
-    Passageiro passageiro;
 
     int opcao;
     do {
@@ -117,47 +118,14 @@ int main() {
             }
             case 5: {
                 cout << GREEN << "Cadastro de passageiro iniciado..." << RESET << endl;
-                Passageiro::cadastrarPassageiro();
-                Passageiro::salvarPassageiros();
+                passageiroController.cadastrarPassageiro();
+                passageiroController.salvarPassageiros();
                 esperarRetorno();
                 break;
             }
             case 6: {
-                cout << YELLOW << "Digite o codigo ou o nome do passageiro para pesquisa: " << RESET << endl;
-                string codigo;
-                cin >> codigo;
-
-                bool isNumero = true;
-                for (char c : codigo) {
-                    if (!isdigit(c)) {
-                        isNumero = false;
-                        break;
-                    }
-                }
-
-                if (isNumero) {
-                    int numero = stoi(codigo);
-                    Passageiro* passageiro = Passageiro::buscarPassageiro(numero);
-                    if (passageiro) {
-                        cout << GREEN << "Passageiro encontrado: " << RESET << passageiro->getNome() << endl;
-                        cout << "Nome: " << passageiro->getNome() << endl;
-                        cout << "Codigo: " << passageiro->getCodigoPassageiro() << endl;
-                        cout << "Telefone: " << passageiro->getTelefone() << endl;
-                    } else {
-                        cout << RED << "Passageiro não encontrado." << RESET << endl;
-                    }
-                } else {
-                    Passageiro* passageiro = Passageiro::buscarPassageiro(codigo);
-                    if (passageiro) {
-                        cout << GREEN << "Passageiro encontrado: " << RESET << passageiro->getNome() << endl;
-                        cout << "Nome: " << passageiro->getNome() << endl;
-                        cout << "Codigo: " << passageiro->getCodigoPassageiro() << endl;
-                        cout << "Telefone: " << passageiro->getTelefone() << endl;
-                    } else {
-                        cout << RED << "Passageiro não encontrado." << RESET << endl;
-                    }
-                }
-
+                cout << GREEN << "Pesquisa de passageiro iniciada..." << RESET << endl;
+                passageiroController.pesquisarPassageiro();
                 esperarRetorno();
                 break;
             }
@@ -176,7 +144,7 @@ int main() {
             }
             case 9: {
                 cout << GREEN << "Fazer reserva iniciado..." << RESET << endl;
-                reserva.cadastrarReserva(&vooController, &passageiro);
+                reserva.cadastrarReserva(&vooController, &passageiroController);
                 esperarRetorno();
                 break;
             }
@@ -205,7 +173,7 @@ int main() {
             }
             case 11: {
                 cout << GREEN << "Fidelidade iniciado..." << RESET << endl;
-                for (const auto& passageiro : passageiro.getListaPassageiros()) {
+                for (const auto& passageiro : passageiroController.getListaPassageiros()) {
                     cout << "Passageiro: " << passageiro.getNome() << " - Pontos de fidelidade: " << passageiro.getPontosFidelidade() << endl;
                 }
                 esperarRetorno();

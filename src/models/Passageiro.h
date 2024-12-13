@@ -36,17 +36,7 @@ public:
     void setFidelidade(bool fidelidade);
     void setPontosFidelidade(int pontos_fidelidade);
 
-    // Métodos estáticos para operações com a lista de passageiros:
-    static bool verificarDuplicidade(int codigo_passageiro);
-    static void cadastrarPassageiro();
-    static void salvarPassageiros();
-    static void carregarPassageiros();
-    static Passageiro* buscarPassageiro(int codigo_passageiro);
-    static Passageiro* buscarPassageiro(const string& nome);
-    vector<Passageiro> getListaPassageiros() const;
 };
 
-// Declaração da lista de passageiros como uma variável global
-extern vector<Passageiro> lista_passageiros;
 
 #endif // PASSAGEIRO_H
