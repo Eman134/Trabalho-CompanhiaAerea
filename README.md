@@ -3,6 +3,12 @@
 
 [Repositório no GitHub](https://github.com/Eman134/Trabalho-CompanhiaAerea)
 
+## Autores
+
+- **Kayke Emanoel** - [Eman134](https://github.com/Eman134)
+- **Rafael Brant** - [rafaelbrant07](https://github.com/rafaelbrant07)
+- **Carlos Eduardo** - [Cadu-santos32](https://github.com/Cadu-santos32)
+
 ## Sobre o projeto
 
 O projeto é uma aplicação de uma companhia aérea fictícia, onde é possível realizar a compra de passagens aéreas, visualizar os voos disponíveis, visualizar os voos já comprados e realizar o check-in.
@@ -122,8 +128,188 @@ Cada um desses objetos tem métodos para manipulação dos dados, como cadastro,
 - **STL (Standard Template Library)**: Utilizada para manipulação de dados, como vetores e strings.
 - **Arquivos binários**: Os dados são salvos em arquivos binários para persistência.
 
-## Autores
+As funções descritas nas classes AviaoController, PassageiroController, TripulacaoController, VooController, e ReservaController são responsáveis pela manipulação dos dados associados a seus respectivos modelos (como Aviao, Passageiro, Tripulacao, Voo, Reserva). Elas servem como intermediárias entre as camadas de dados (modelos) e a interface do usuário ou outras partes do sistema que requerem acesso a esses dados.
 
-- **Kayke Emanoel** - [Eman134](https://github.com/Eman134)
-- **Rafael Brant** - [rafaelbrant07](https://github.com/rafaelbrant07)
-- **Carlos Eduardo** - [Cadu-santos32](https://github.com/Cadu-santos32)
+Lista de assinaturas das funções e parâmetros do programa:
+
+Classe AviaoController:
+    AviaoController();
+    void carregarAvioes();
+    void salvarAvioes();
+    Aviao* buscarAviao(int codigo_aviao);
+    vector<Aviao> getListaAvioes() const;
+    void cadastrarAviao();
+    void editarAviao(int codigo_aviao);
+    void excluirAviao(int codigo_aviao);
+    void visualizarAvioes() const;
+    void setDisponibilidade(int codigo_aviao, bool disponibilidade);
+    int avioesDisponiveis() const;
+    int avioesCadastrados() const;
+    int getProximoCodigo() const;
+
+Classe PassageiroController:
+    PassageiroController();
+    void carregarPassageiros();
+    void salvarPassageiros();
+    Passageiro* buscarPassageiro(int codigo_passageiro);
+    vector<Passageiro> getListaPassageiros() const;
+    void cadastrarPassageiro();
+    void editarPassageiro(int codigo_passageiro);
+    void excluirPassageiro(int codigo_passageiro);
+    void visualizarPassageiros() const;
+    int getProximoCodigo() const;
+
+Classe TripulacaoController:
+    TripulacaoController();
+    vector<Tripulacao> getTripulacoes() const;
+    int getQtdPiloto() const;
+    int getQtdCopiloto() const;
+    int getQtdComissario() const;
+    void cadastrarTripulacao();
+    void listarTripulacao();
+    void salvarTripulacao();
+    void carregarTripulacao();
+
+Classe VooController:
+    VooController();
+    void carregarVoos();
+    Voo* buscarVoo(int codigo_voo);
+    int getNumeroVoos() const;
+    vector<Voo> getListaVoos() const;
+    void salvarVoos();
+    void cadastrarVoo(AviaoController* aviaoController, TripulacaoController* tripulacaoController);
+    void visualizarVoos() const;
+    void darBaixaVoo(int codigo_voo);
+    int voosCadastrados() const;
+    int getProximoCodigo() const;
+
+Classe ReservaController:
+    ReservaController();
+    void cadastrarReserva(VooController* vooController, PassageiroController* passageiroController);
+    void exibirDetalhesReserva(Reserva* reserva);
+    Reserva* buscarReserva(int codigo_reserva);
+    vector<Reserva> getListaReservas() const;
+    void salvarReservas();
+    void carregarReservas();
+    void excluirReservasVoo(int codigo_voo);
+    void listarReservas();
+    void exibirTabelaAssentos(int codigo_voo);
+    void reservarAssento(int codigo_voo, int assento, Passageiro* passageiro);
+    int getProximoCodigoReserva() const;
+    bool estaReservado(int codigo_voo, int assento)
+
+Models para os tipos de dados:
+    Aviao
+    Passageiro
+    Tripulacao
+    Voo
+    Reserva
+    Assento
+
+Aviao:
+    Aviao(int codigo_aviao, string nome_aviao, int qtd_assentos, bool disponivel);
+    Aviao();
+    int getCodigoAviao() const;
+    string getNomeAviao() const;
+    int getQtdAssentos() const;
+    bool getDisponivel() const;
+    void setDisponibilidade(bool disponibilidade);
+    void setCodigoAviao(int codigo_aviao);
+    void setNomeAviao(const string& nome_aviao);
+    void setQtdAssentos(int qtd_assentos);
+    void salvar(ostream& out) const;
+    void carregar(istream& in);
+
+Passageiro:
+    Passageiro(int codigo_passageiro, string nome, string endereco, string telefone, bool fidelidade, int pontos_fidelidade);
+    Passageiro();
+    int getCodigoPassageiro() const;
+    string getNome() const;
+    string getEndereco() const;
+    string getTelefone() const;
+    bool isFidelidade() const;
+    int getPontosFidelidade() const;
+    void setCodigoPassageiro(int codigo_passageiro);
+    void setNome(string nome);
+    void setEndereco(string endereco);
+    void setTelefone(string telefone);
+    void setFidelidade(bool fidelidade);
+    void setPontosFidelidade(int pontos_fidelidade);
+
+Tripulacao:
+    Tripulacao(int codigo, string nome, string cargo, string telefone, bool disponivel);
+    Tripulacao();
+    int getCodigoTripulacao() const;
+    string getNomeTripulacao() const;
+    string getCargoTripulacao() const;
+    string getTelefoneTripulacao() const;
+    bool getDisponivel() const;
+    void setCodigoTripulacao(int codigo);
+    void setNomeTripulacao(string nome);
+    void setCargoTripulacao(string cargo);
+    void setTelefoneTripulacao(string telefone);
+    void setDisponivel(bool disponivel);
+    void salvar();
+    void carregar();
+
+Voo:
+    Voo();
+    int getCodigoVoo() const;
+    int getCodigoAviao() const;
+    int getCodigoPiloto() const;
+    int getCodigoCopiloto() const;
+    int getCodigoComissario() const;
+    string getData() const;
+    int getHora() const;
+    string getOrigem() const;
+    string getDestino() const;
+    string getStatus() const;
+    float getTarifa() const;
+    int getAssentosDisponiveis() const;
+    int getAssentosTotais() const;
+    void setCodigoVoo(int codigo_voo);
+    void setCodigoAviao(int codigo_aviao);
+    void setCodigoPiloto(int codigo_piloto);
+    void setCodigoCopiloto(int codigo_copiloto);
+    void setCodigoComissario(int codigo_comissario);
+    void setData(const string& data);
+    void setHora(int hora);
+    void setOrigem(const string& origem);
+    void setDestino(const string& destino);
+    void setStatus(const string& status);
+    void setTarifa(float tarifa);
+    void setAssentosDisponiveis(int assentos_disponiveis);
+    void salvar(ostream& out) const;
+    void carregar(istream& in);
+
+Reserva:
+    Reserva();
+    Reserva(int codigoReserva, int codigo_voo, int codigoPassageiro, int pontos_fidelidade, int assento,
+            string nomePassageiro, string endereco, string telefone, string dataVoo, bool fidelidade, int hora,
+            string dataReserva, float tarifa);
+    int getCodigoPassageiro() const;
+    int getCodigoReserva() const;
+    int getNumeroVoo() const;
+    int getAssento() const;
+    string getNomePassageiro() const;
+    string getdataVoo() const;
+    string getdataReserva() const;
+    float getTarifa() const;
+    int getHora() const;
+    int getPontosFidelidade() const;
+    string getEndereco() const;
+    string getTelefone() const;
+    bool isFidelidade() const;
+    void setCodigoPassageiro(int codigoPassageiro);
+    void setCodigoReserva(int codigoReserva);
+    void setNumeroVoo(int codigo_voo);
+    void setAssento(int assento);
+    void setNomePassageiro(string nomePassageiro);
+    void setdataVoo(string dataVoo);
+    void setdataReserva(string dataReserva);
+    void setTarifa(float tarifa);
+    void setHora(int hora);
+    void setPontosFidelidade(int pontos_fidelidade);
+    void setEndereco(string endereco);
+    void setTelefone(string telefone);
+    void setFidelidade(bool fidelidade);
