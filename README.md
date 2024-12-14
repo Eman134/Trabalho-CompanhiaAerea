@@ -34,7 +34,7 @@ Se preferir, você pode compilar o projeto com `g++` ou outro compilador de sua 
 2. Compile o projeto com o seguinte comando:
 
     ```bash
-    g++ main.cpp modulos/*.cpp -o TrabalhoCompanhiaAerea
+    g++ main.cpp src/*/*.cpp -o TrabalhoCompanhiaAerea
     ```
 
 3. Após compilar, execute o programa gerado (no Windows, será um arquivo `TrabalhoCompanhiaAerea.exe`):
