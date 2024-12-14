@@ -3,8 +3,9 @@
 #include "src/controllers/VooController.h"
 #include "src/controllers/TripulacaoController.h"
 #include "src/controllers/PassageiroController.h"
+#include "src/controllers/ReservaController.h"
 #include "src/models/Passageiro.h"
-#include "modulos/FazerReserva.h"
+#include "src/models/Reserva.h"
 #include <stdlib.h>
 #include <locale>
 #include <limits>
@@ -78,11 +79,10 @@ void criarDiretorioLocal() {
 int main() {
     criarDiretorioLocal();
 
-    AviaoController aviaoController;
-    VooController vooController;
-    TripulacaoController tripulacaoController;
-    PassageiroController passageiroController;
-    Reserva reserva;
+    AviaoController aviaoController = AviaoController();
+    VooController vooController = VooController();
+    TripulacaoController tripulacaoController = TripulacaoController();
+    PassageiroController passageiroController = PassageiroController();
 
     int opcao;
     do {
@@ -144,6 +144,7 @@ int main() {
             }
             case 9: {
                 cout << GREEN << "Fazer reserva iniciado..." << RESET << endl;
+                ReservaController reserva = ReservaController();
                 reserva.cadastrarReserva(&vooController, &passageiroController);
                 esperarRetorno();
                 break;

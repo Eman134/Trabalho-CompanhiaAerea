@@ -30,7 +30,6 @@ public:
 
     void salvarVoos();
     void cadastrarVoo(AviaoController* aviaoController, TripulacaoController* tripulacaoController);
-    void reservarAssento(int codigo_voo, int numero_assento, Passageiro* passageiro);
     void visualizarVoos() const;
     void darBaixaVoo(int codigo_voo);
     int voosCadastrados() const;

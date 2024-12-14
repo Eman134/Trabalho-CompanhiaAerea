@@ -42,11 +42,6 @@ class Voo {
         int getAssentosTotais() const;
         Assento* getAssento(int numero);
         vector<Assento> getAssentos() const;
-        vector<Assento> getAssentosOcupados() const;
-        void exibirTabelaAssentos(int linhas, int colunas);
-        bool reservarAssento(int numero, Passageiro* passageiro);
-        void liberarAssento(int numero);
-        void cadastrarAssento(int numero); // Adicionando a função de cadastrar assento
 
         void setCodigoVoo(int codigo_voo);
         void setCodigoAviao(int codigo_aviao);

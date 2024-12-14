@@ -1,11 +1,13 @@
 #include "VooController.h"
 #include "AviaoController.h"
 #include "TripulacaoController.h"
+#include "ReservaController.h"
 #include <iostream>
 #include <sys/stat.h>
 #include <fstream>
 #include <limits>
 #include <iomanip>
+#include <algorithm>
 #ifdef _WIN32
     #include <direct.h>
 #endif
@@ -230,17 +232,10 @@ void VooController::darBaixaVoo(int codigo_voo) {
     if (voo) {
         voo->setStatus("Realizado");
         salvarVoos();
+        ReservaController reservaController;
+        reservaController.excluirReservasVoo(codigo_voo);
         cout << GREEN << "Voo " << codigo_voo << " realizado com sucesso!" << RESET << endl;
     } else {
         cout << RED << "Voo nao encontrado." << RESET << endl;
-    }
-}
-
-void VooController::reservarAssento(int codigo_voo, int numero_assento, Passageiro* passageiro) {
-    Voo* voo = buscarVoo(codigo_voo);
-    if (voo) {
-        if (voo->reservarAssento(numero_assento, passageiro)) {
-            salvarVoos();
-        }
     }
 }
