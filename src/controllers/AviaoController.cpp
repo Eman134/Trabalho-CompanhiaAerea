@@ -6,10 +6,12 @@
 
 using namespace std;
 
+// Construtor da classe AviaoController
 AviaoController::AviaoController() {
     carregarAvioes();
 }
 
+// Método para carregar os aviões do arquivo binário
 void AviaoController::carregarAvioes() {
     lista_avioes.clear();
 
@@ -27,10 +29,12 @@ void AviaoController::carregarAvioes() {
     arquivo.close();
 }
 
+// Método para pegar a lista de aviões
 vector<Aviao> AviaoController::getListaAvioes() const {
     return lista_avioes;
 }
 
+// Método para salvar os aviões no arquivo binário
 void AviaoController::salvarAvioes() {
 
     std::ofstream arquivo("./db/avioes.bin", std::ios::binary | std::ios::trunc);
@@ -45,6 +49,7 @@ void AviaoController::salvarAvioes() {
     arquivo.close();
 }
 
+// Método para cadastrar um avião novo
 void AviaoController::cadastrarAviao() {
 
     Aviao aviao;
@@ -71,6 +76,7 @@ void AviaoController::cadastrarAviao() {
     cout << "Aviao cadastrado com sucesso!" << endl;
 }
 
+// Método para buscar um avião no vetor de aviões pelo código
 Aviao* AviaoController::buscarAviao(int codigo_aviao) {
     for (Aviao& aviao : lista_avioes) {
         if (aviao.getCodigoAviao() == codigo_aviao) {
@@ -80,6 +86,7 @@ Aviao* AviaoController::buscarAviao(int codigo_aviao) {
     return nullptr;
 }
 
+// Procedimento para visualizar os aviões cadastrados
 void AviaoController::visualizarAvioes() const {
 
     if (lista_avioes.empty()) {
@@ -96,6 +103,7 @@ void AviaoController::visualizarAvioes() const {
     }
 }
 
+// Método para alterar a disponibilidade de um avião
 void AviaoController::setDisponibilidade(int codigo_aviao, bool disponibilidade) {
     for (Aviao& aviao : lista_avioes) {
         if (aviao.getCodigoAviao() == codigo_aviao) {
@@ -106,6 +114,7 @@ void AviaoController::setDisponibilidade(int codigo_aviao, bool disponibilidade)
     salvarAvioes();
 }
 
+// Método para ver a quantidade de aviões disponíveis
 int AviaoController::avioesDisponiveis() const {
     int count = 0;
     for (const Aviao& aviao : lista_avioes) {
@@ -116,10 +125,12 @@ int AviaoController::avioesDisponiveis() const {
     return count;
 }
 
+// Método para ver a quantidade de aviões cadastrados
 int AviaoController::avioesCadastrados() const {
     return lista_avioes.size();
 }
 
+// Método para pegar o próximo código de avião, para não repetir códigos
 int AviaoController::getProximoCodigo() const {
     if (lista_avioes.empty()) {
         return 1;

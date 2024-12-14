@@ -17,6 +17,7 @@
 
 using namespace std;
 
+// Construtor da classe Voo
 Voo::Voo() {
     this->codigo_voo = 0;
     this->codigo_aviao = 0;
@@ -33,67 +34,67 @@ Voo::Voo() {
     this->numAssentos = 50;
 }
 
+// Pegar o código do voo
 int Voo::getCodigoVoo() const {
     return this->codigo_voo;
 }
 
+// Pegar o código do avião
 int Voo::getCodigoAviao() const {
     return this->codigo_aviao;
 }
 
+// Pegar o código do piloto
 int Voo::getCodigoPiloto() const {
     return this->codigo_piloto;
 }
 
+// Pegar o código do copiloto
 int Voo::getCodigoCopiloto() const {
     return this->codigo_copiloto;
 }
 
+// Pegar o código do comissário
 int Voo::getCodigoComissario() const {
     return this->codigo_comissario;
 }
 
+// Pegar a data
 string Voo::getData() const {
     return this->data;
 }
 
+// Pegar a hora
 int Voo::getHora() const {
     return this->hora;
 }
 
+// Pegar a origem
 string Voo::getOrigem() const {
     return this->origem;
 }
 
+// Pegar o destino
 string Voo::getDestino() const {
     return this->destino;
 }
 
+// Pegar o status
 string Voo::getStatus() const {
     return this->status;
 }
 
+// Pegar a tarifa
 float Voo::getTarifa() const {
     return this->tarifa;
 }
 
-Assento* Voo::getAssento(int numeroassento) {
-    auto it = find_if(assentos.begin(), assentos.end(),
-                      [numeroassento](const Assento& assento) { return assento.getNumero() == numeroassento; });
-    if (it != assentos.end()) {
-        return &(*it);
-    }
-    return nullptr;
-}
-
-vector<Assento> Voo::getAssentos() const {
-    return assentos;
-}
-
+// Pega a quantidade de assentos disponíveis
 int Voo::getAssentosDisponiveis() const {
     return this->assentos_disponiveis;
 }
 
+// Pega a quantidade de assentos totais
 int Voo::getAssentosTotais() const {
     int qtd_assentos = 0;
     AviaoController aviaoController;
@@ -104,54 +105,67 @@ int Voo::getAssentosTotais() const {
     return qtd_assentos;
 }
 
+// Setar o código do voo
 void Voo::setCodigoVoo(int codigo_voo) {
     this->codigo_voo = codigo_voo;
 }
 
+// Setar o código do avião
 void Voo::setCodigoAviao(int codigo_aviao) {
     this->codigo_aviao = codigo_aviao;
 }
 
+// Setar o código do piloto
 void Voo::setCodigoPiloto(int codigo_piloto) {
     this->codigo_piloto = codigo_piloto;
 }
 
+// Setar o código do copiloto
 void Voo::setCodigoCopiloto(int codigo_copiloto) {
     this->codigo_copiloto = codigo_copiloto;
 }
 
+// Setar o código do comissário
 void Voo::setCodigoComissario(int codigo_comissario) {
     this->codigo_comissario = codigo_comissario;
 }
 
+// Setar a data
 void Voo::setData(const string& data) {
     this->data = data;
 }
 
+// Setar a hora
 void Voo::setHora(int hora) {
     this->hora = hora;
 }
 
+// Setar a origem
 void Voo::setOrigem(const string& origem) {
     this->origem = origem;
 }
 
+// Setar o destino
 void Voo::setDestino(const string& destino) {
     this->destino = destino;
 }
 
+// Setar o status
 void Voo::setStatus(const string& status) {
     this->status = status;
 }
 
+// Setar a tarifa
 void Voo::setTarifa(float tarifa) {
     this->tarifa = tarifa;
 }
 
+// Setar a quantidade de assentos disponíveis
 void Voo::setAssentosDisponiveis(int assentos_disponiveis) {
     this->assentos_disponiveis = assentos_disponiveis;
 }
 
+// Método para salvar os dados do voo
 void Voo::salvar(ostream& out) const {
 
     out.write((char*)&codigo_voo, sizeof(codigo_voo));
@@ -199,6 +213,7 @@ void Voo::salvar(ostream& out) const {
 
 }
 
+// Método para carregar os dados do voo
 void Voo::carregar(std::istream& in) {
     // Leia os dados básicos do voo
     in.read((char*)&codigo_voo, sizeof(codigo_voo));

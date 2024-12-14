@@ -40,8 +40,6 @@ class Voo {
         float getTarifa() const;
         int getAssentosDisponiveis() const;
         int getAssentosTotais() const;
-        Assento* getAssento(int numero);
-        vector<Assento> getAssentos() const;
 
         void setCodigoVoo(int codigo_voo);
         void setCodigoAviao(int codigo_aviao);

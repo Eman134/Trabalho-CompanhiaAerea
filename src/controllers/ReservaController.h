@@ -26,7 +26,6 @@ class ReservaController {
         void exibirDetalhesReserva(Reserva* reserva);
 
         // Métodos para manipulação da lista de reservas
-
         Reserva* buscarReserva(int codigo_reserva);
 
         vector<Reserva> getListaReservas() const;

@@ -10,8 +10,10 @@ private:
     Passageiro* passageiro;
 
 public:
+    // Construtor
     Assento(int num = 0);
 
+    // Métodos
     int getNumero() const;
     Passageiro* getPassageiro() const;
 
